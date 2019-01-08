@@ -80,6 +80,16 @@
 
 <view class='foot_space'></view>
 
-<form report-submit="true" bindsubmit="formSubmit">
-  <button class='submit' catchtap='verify' form-type='submit'>下单找师傅</button>
-</form>
+<view class='footer'>
+  <navigator url='/pages/shopCart/index'>
+    <text>{{shopCartCount}}</text>
+    <image src='/img/shopcar.png'></image>
+    <view>购物车</view>
+  </navigator>
+  <form report-submit="true" bindsubmit="formSubmit">
+    <button class='add_shopcart' catchtap='addToShopCart' form-type='submit'>加入购物车</button>
+  </form>
+  <form report-submit="true" bindsubmit="formSubmit">
+    <button class='submit' catchtap='verify' form-type='submit'>立即下单</button>
+  </form>
+</view>

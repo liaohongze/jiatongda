@@ -1,4 +1,5 @@
 /* pages/simAppointment/index.wxss */
+
 .head {
   padding-top: 30rpx;
   padding-left: 30rpx;
@@ -8,21 +9,25 @@
 }
 
 /* 联系方式 */
+
 .contact {
   display: block;
   margin-top: 21rpx;
   font-size: 30rpx;
   background-color: #fff;
 }
+
 .contact_item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 36rpx;
 }
+
 .contact_item .info > text {
   display: block;
 }
+
 .contact_item .info .addr {
   display: flex;
   align-items: center;
@@ -31,8 +36,8 @@
 }
 
 /* 时间 */
-.date,
-.time {
+
+.date, .time {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -44,8 +49,7 @@
   background-color: #fff;
 }
 
-.left_side,
-.right_side {
+.left_side, .right_side {
   display: flex;
   align-items: center;
 }
@@ -53,11 +57,13 @@
 .left_side text {
   margin-left: 20rpx;
 }
+
 .right_side text {
   margin-right: 20rpx;
 }
 
 /* 留言框 */
+
 textarea {
   box-sizing: border-box;
   width: 750rpx;
@@ -69,14 +75,17 @@ textarea {
 }
 
 /* 上传图片 */
+
 .product_uploader .weui-uploader__input-box,
 .product_uploader .weui-uploader__img {
   width: 155rpx;
   height: 155rpx;
 }
+
 .product_uploader .weui-uploader__file {
   position: relative;
 }
+
 .product_uploader .weui-uploader__title {
   font-size: 30rpx;
 }
@@ -90,6 +99,7 @@ textarea {
 }
 
 /* 协议 */
+
 .agreement {
   padding: 30rpx;
   font-size: 25rpx;
@@ -102,15 +112,62 @@ textarea {
 }
 
 /* 提交按钮 */
-.submit {
+
+.footer {
   position: fixed;
   bottom: 0;
   left: 0;
+  display: flex;
   width: 100%;
   height: 118rpx;
-  font-size: 30rpx;
+  font-size: 23rpx;
+  background-color: #fff;
+}
+
+.footer > navigator {
+  position: relative;
+  width: 350rpx;
+  height: 118rpx;
+  text-align: center;
+  background-color: #fff;
+}
+
+.footer > navigator text {
+  position: absolute;
+  top: 11rpx;
+  left: 176rpx;
+  width: 33rpx;
+  height: 33rpx;
+  color: #fff;
+  background: rgba(255, 27, 54, 1);
+  border-radius: 50%;
+}
+
+.footer > navigator image {
+  width: 41rpx;
+  height: 41rpx;
+  margin-top: 29rpx;
+}
+
+.footer > navigator view {
+  display: block;
+  color: #777;
+}
+
+.add_shopcart, .submit {
+  width: 200rpx;
+  height: 118rpx;
+  font-size: 29rpx;
   line-height: 118rpx;
+  border-radius: 0;
+}
+
+.add_shopcart {
+  color: #555;
+  background-color: #ffc540;
+}
+
+.submit {
   color: #fff;
   background-color: #00c482;
-  border-radius: 0;
 }

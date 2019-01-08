@@ -14,7 +14,8 @@ Page({
     product: {},
     startDate: '', //用于时间选择器的开始时间
     endDate: '', //用于时间选择器的结束时间
-    files: []
+    files: [],
+    shopCartCount: app.globalData.shopCart.length
   },
 
   /**
@@ -338,6 +339,54 @@ Page({
             duration: 2000
           })
         }
+      })
+    }
+  },
+
+  addToShopCart: function () {
+    // 1、构建订单对象
+    // 2、判断购物车内是否有产品名称、地址、日期、时间都相同的订单
+    // 3、如果有，提示已经添加过相同的产品
+    // 4、如果没有，加入购物车，重新获取购物车数据，提示添加成功
+    var that = this
+    var order = {
+      obj_name: that.data.product.p_name,
+      obj_id: that.data.product.p_id,
+      c_id: this.data.product.c_id,
+      data: that.data.order.date,
+      time: that.data.order.time,
+      make_time: that.data.order.date + ' ' + that.data.order.time,
+      remark: that.data.order.msg,
+      mobile: that.data.order.address.mobile,
+      username: that.data.order.address.name,
+      address_info: JSON.stringify(that.data.order.address),
+      order_type: 1,
+      file_name: fileNames.substring(0, fileNames.length - 1)
+    }
+
+    var hadOrder = false
+    var shopCart = app.globalData.shopCart
+    shopCart.map(item => {
+      if (item.obj_id === order.obj_id && item.mobile === order.mobile && item.username === order.username && item.address_info === order.address_info && item.data === order.data && item.time === order.time) {
+        hadOrder = true
+      }
+    })
+
+    if (hadOrder) {//购物车里已经有该订单
+      wx.showToast({
+        title: '已有该订单，师傅报价订单不能重复添加',
+        icon: 'none',
+        duration: 2500
+      })
+      return
+    } else {
+      shopCart.push(order)
+      this.setData({
+        shopCartCount: shopCart.length
+      })
+      wx.showToast({
+        title: '添加成功',
+        duration: 2000
       })
     }
   },
