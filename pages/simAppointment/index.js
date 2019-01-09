@@ -301,7 +301,8 @@ Page({
         filePath: files[success],
         name: 'orderImage' + (success + 1),
         formData: {
-          'file_name': 'orderImage' + (success + 1)
+          'file_name': 'orderImage' + (success + 1),
+          'token': wx.getStorageSync('token')
         },
         success: function(res) {
           // console.log(res)

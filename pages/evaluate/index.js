@@ -192,7 +192,8 @@ Page({
         filePath: files[success],
         name: 'commentImage' + (success + 1),
         formData: {
-          'file_name': 'commentImage' + (success + 1)
+          'file_name': 'commentImage' + (success + 1),
+          'token': wx.getStorageSync('token')
         },
         success: function (res) {
           console.log(res)
