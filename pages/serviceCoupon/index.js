@@ -115,7 +115,7 @@ Page({
   },
 
   selectCoupon: function (e) {
-    if (this.data.fromPage) {
+    if (this.data.fromPage === 'pay') {
       app.globalData.pagePay.coupon = {
         code: e.currentTarget.dataset.code,
         prices: e.currentTarget.dataset.price

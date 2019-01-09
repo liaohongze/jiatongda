@@ -647,7 +647,7 @@ Page({
     submitOrder.then(res => {
       if (res.data.status) {
         wx.redirectTo({
-          url: '/pages/pay/index?orderId=' + res.data.data.order_id + '&orderSn=' + res.data.data.order_sn + '&count=' + (that.data.product.sku.sale_price * that.data.order.count) + '&isStandard=' + that.data.product.is_standard
+          url: '/pages/pay/index?orderId=' + res.data.data.order_id + '&orderSn=' + res.data.data.order_sn + '&count=' + (that.data.product.sku.sale_price * that.data.order.count) + '&isStandard=' + that.data.product.is_standard + '&c_id=' + res.data.data.c_id
         })
       }
     })

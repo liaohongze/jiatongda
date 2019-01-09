@@ -138,7 +138,7 @@ module.exports = {
   },
   // 上传图片
   uploadFile: function () {
-    return domain + "/mini_user/mini/file_up"
+    return domain + "/mini_user/wx_user/file_up"
   },
   // 查询该用户所有订单或者某个状态的订单
   getOrders: function () {
