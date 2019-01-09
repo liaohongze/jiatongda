@@ -5,7 +5,7 @@
   <text>{{payCount}}</text>
 </view>
 
-<form report-submit="true" bindsubmit="formSubmit" wx:if="{{!isStandard}}">
+<form report-submit="true" bindsubmit="formSubmit">
   <view class='offer_price'>报价金额：￥
     <text>{{offerPrice}}</text>
   </view>

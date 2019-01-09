@@ -35,16 +35,11 @@ App({
       productId: '',
       typeData: [],
       specData: [],
-      
       count: 1,
       startAddr: '',
       endAddr: '',
       date: '',
       time: '',
-      coupon: {
-        id: '',
-        count: 0
-      },
       msg: ''
     },
     pageSimAppoint: {

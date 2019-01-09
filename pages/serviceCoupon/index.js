@@ -13,7 +13,7 @@ Page({
     unUseful: [],
     cId: '',
     total: 0,
-    fromPay: false
+    fromPage: 'pay'
   },
 
   /**
@@ -23,7 +23,7 @@ Page({
     this.setData({
       cId: options.c_id,
       total: parseFloat(options.total),
-      fromPay: options.from || false
+      fromPage: options.from
     }, () => {
       this.getCoupon()
     })
@@ -115,17 +115,18 @@ Page({
   },
 
   selectCoupon: function (e) {
-    if (this.data.fromPay) {
+    if (this.data.fromPage) {
       app.globalData.pagePay.coupon = {
         code: e.currentTarget.dataset.code,
         prices: e.currentTarget.dataset.price
       }
-    } else {
-      app.globalData.pageAppointment.coupon = {
-        id: e.currentTarget.id,
-        count: e.currentTarget.dataset.price
-      }
     }
+    //  else {
+    //   app.globalData.pageAppointment.coupon = {
+    //     id: e.currentTarget.id,
+    //     count: e.currentTarget.dataset.price
+    //   }
+    // }
 
     wx.navigateBack()
   }

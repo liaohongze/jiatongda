@@ -80,7 +80,7 @@
   </view>
 </picker>
 
-<view class='coupon' catchtap='selectCoupon'>
+<!-- <view class='coupon' catchtap='selectCoupon'>
   <view class='left_side'>
     <i-icon type="coupons" size="26" color="#09bb07" />
     <text>优惠券</text>
@@ -90,7 +90,7 @@
     <text wx:else>{{couponMsg}}</text>
     <i-icon type="enter" size="24" color="#cccccc" />
   </view>
-</view>
+</view> -->
 
 <view class='agreement'>
   点击立即支付即同意
@@ -102,7 +102,6 @@
 <view class='foot'>
   <view>
     <text class='origin_price'>服务金额：￥{{serverPrice || 0}}</text>
-    <text class='price'>应付金额：<text>￥{{totalPrice || 0}}</text></text>
   </view>
   <form report-submit="true" bindsubmit="formSubmit">
     <button catchtap='submitOrder' form-type='submit'>提交订单</button>

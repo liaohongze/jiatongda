@@ -12,12 +12,11 @@ Page({
     time: [['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'], ['00', '30']],
     product: {},
     order: {},
-    canUse: [],    
-    couponMsg: '暂无可用优惠券',
+    // canUse: [],    
+    // couponMsg: '暂无可用优惠券',
     startDate: '',//用于时间选择器的开始时间
     endDate: '', //用于时间选择器的结束时间
-    serverPrice: 0,
-    totalPrice: 0
+    serverPrice: 0
   },
 
   /**
@@ -33,10 +32,6 @@ Page({
       endAddr: '',
       date: '',
       time: '',
-      coupon: {
-        id: '',
-        count: 0
-      },
       msg: ''
     }
     app.globalData.pageAppointment = reset
@@ -79,12 +74,11 @@ Page({
     this.setData({
       order: app.globalData.pageAppointment
     }, () => {
-      if (JSON.stringify(this.data.product) == '{}') return
-      if (JSON.stringify(this.data.order) == '{}') return
-      this.setData({
-        serverPrice: parseFloat((this.data.product.sku.sale_price * this.data.order.count).toFixed(2)),
-        totalPrice: parseFloat((this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count).toFixed(2))
-      })
+      if (this.data.product.sku !== undefined && this.data.order.count !== undefined) {
+        this.setData({
+          serverPrice: parseFloat((this.data.product.sku.sale_price * this.data.order.count).toFixed(2)),
+        })
+      }
     })
   },
 
@@ -147,7 +141,7 @@ Page({
         }, () => {
           //通过id获取产品sku
           that.getSkuById(id)
-          that.getCoupon()
+          // that.getCoupon()
         })
       }
     })
@@ -176,7 +170,7 @@ Page({
           item.disable = false
         })
 
-        app.globalData.pageAppointment.coupon = { id: '', count: 0 } //取消选中就把优惠劵清空
+        // app.globalData.pageAppointment.coupon = { id: '', count: 0 } //取消选中就把优惠劵清空
         var product = this.data.product
         product.sku.typeName = ''
         product.sku.sale_price = ''
@@ -230,22 +224,14 @@ Page({
       this.setData({
         order: app.globalData.pageAppointment
       }, () => {
-        if (specHasSelected) {
-          this.couponFilter()
-        }
+        // if (specHasSelected) {
+        //   this.couponFilter()
+        // }
 
         if (this.data.product !== undefined && this.data.order !== undefined) {
           var serverPrice = parseFloat((this.data.product.sku.sale_price * this.data.order.count).toFixed(2))
-          var totalPrice = parseFloat((this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count).toFixed(2))
-          // if (typeof (this.data.product.sku.sale_price * this.data.order.count).toFixed(2) == 'number') {
-          //     serverPrice = (this.data.product.sku.sale_price * this.data.order.count).toFixed(2)
-          // }
-          // if (typeof (this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count).toFixed(2) == 'number') {
-          //   totalPrice = (this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count).toFixed(2)
-          // }
           this.setData({
-            serverPrice: serverPrice,
-            totalPrice: totalPrice
+            serverPrice: serverPrice
           })
         }
       })
@@ -275,7 +261,7 @@ Page({
           item.disable = false
         })
 
-        app.globalData.pageAppointment.coupon = { id: '', count: 0 } //取消选中就把优惠劵清空
+        // app.globalData.pageAppointment.coupon = { id: '', count: 0 } //取消选中就把优惠劵清空
         var product = this.data.product
         product.sku.specName = ''
         product.sku.sale_price = ''
@@ -322,23 +308,14 @@ Page({
       this.setData({
         order: app.globalData.pageAppointment
       }, () => {
-        if (typeHasSelected) {
-          this.couponFilter()
-        }
+        // if (typeHasSelected) {
+        //   this.couponFilter()
+        // }
 
         if (this.data.product !== undefined && this.data.order !== undefined) {
           var serverPrice = parseFloat((this.data.product.sku.sale_price * this.data.order.count).toFixed(2))
-          var totalPrice = parseFloat((this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count).toFixed(2))
-          
-          // if (typeof (this.data.product.sku.sale_price * this.data.order.count).toFixed(2) == 'number') {
-          //   serverPrice = (this.data.product.sku.sale_price * this.data.order.count).toFixed(2)
-          // }
-          // if (typeof (this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count).toFixed(2) == 'number') {
-          //   totalPrice = (this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count).toFixed(2)
-          // }
           this.setData({
-            serverPrice: serverPrice,
-            totalPrice: totalPrice
+            serverPrice: serverPrice
           })
         }
       })
@@ -352,10 +329,9 @@ Page({
       order: app.globalData.pageAppointment
     }, () => {
       this.setData({
-        serverPrice: (this.data.product.sku.sale_price * this.data.order.count).toFixed(2),
-        totalPrice: (this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count).toFixed(2)
+        serverPrice: (this.data.product.sku.sale_price * this.data.order.count).toFixed(2)
       })
-      this.couponFilter()
+      // this.couponFilter()
     })
   },
   
@@ -462,58 +438,54 @@ Page({
     })
   },
 
-  getCoupon: function () {
-    var that = this
-    //查询个人优惠券
-    var getCoupon = wxRequest.postRequest(path.getCoupon(), {
-      page: 1,
-      page_size: 100,
-      status: 0 //0为未使用
-    });
-    getCoupon.then(res => {
-      var coupons = res.data.data.list, length = res.data.data.list.length
-      var canUse = []
+  // getCoupon: function () {
+  //   var that = this
+  //   //查询个人优惠券
+  //   var getCoupon = wxRequest.postRequest(path.getCoupon(), {
+  //     page: 1,
+  //     page_size: 100,
+  //     status: 0 //0为未使用
+  //   });
+  //   getCoupon.then(res => {
+  //     var coupons = res.data.data.list, length = res.data.data.list.length
+  //     var canUse = []
 
-      for (let item of coupons) {
-        if (item.service_id.split(',').indexOf(that.data.product.c_id + '') != -1) {
-          canUse.push(item)
-        }
-      }
+  //     for (let item of coupons) {
+  //       if (item.service_id.split(',').indexOf(that.data.product.c_id + '') != -1) {
+  //         canUse.push(item)
+  //       }
+  //     }
 
-      that.setData({
-        canUse: canUse
-      })
-    })
-  },
+  //     that.setData({
+  //       canUse: canUse
+  //     })
+  //   })
+  // },
 
   // 自动筛选最优优惠劵
-  couponFilter: function () {
-    var count = parseFloat(this.data.product.sku.sale_price * this.data.order.count)
-    var priceLower = [], maxSaleOff = 0, finalCoupon = {}
-    if (this.data.canUse.length) {
-      for (let item of this.data.canUse) {
-        if (item.prices <= count) {// 过滤掉价格大于服务金额的
-          if (item.prices > maxSaleOff) {
-            maxSaleOff = item.prices
-            finalCoupon = item
-          }
-        }
-      }
+  // couponFilter: function () {
+  //   var count = parseFloat(this.data.product.sku.sale_price * this.data.order.count)
+  //   var priceLower = [], maxSaleOff = 0, finalCoupon = {}
+  //   if (this.data.canUse.length) {
+  //     for (let item of this.data.canUse) {
+  //       if (item.prices <= count) {// 过滤掉价格大于服务金额的
+  //         if (item.prices > maxSaleOff) {
+  //           maxSaleOff = item.prices
+  //           finalCoupon = item
+  //         }
+  //       }
+  //     }
 
-      app.globalData.pageAppointment.coupon = {
-        coupon_code: finalCoupon.coupon_code || '',
-        count: finalCoupon.prices || 0
-      }
+  //     app.globalData.pageAppointment.coupon = {
+  //       coupon_code: finalCoupon.coupon_code || '',
+  //       count: finalCoupon.prices || 0
+  //     }
 
-      this.setData({
-        order: app.globalData.pageAppointment
-      }, () => {
-        this.setData({
-          totalPrice: parseFloat((this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count).toFixed(2))
-        })
-      })
-    }
-  },
+  //     this.setData({
+  //       order: app.globalData.pageAppointment
+  //     })
+  //   }
+  // },
 
   getSkuById: function (id) {
     var that = this
@@ -580,12 +552,6 @@ Page({
             disable: false
           })
         }
-
-        // console.log(types)
-        // console.log(spec)
-        // console.log(typeObj)
-        // console.log(specObj)
-        // console.log(productFilter)
 
         var product = that.data.product
         product.sku = {
@@ -664,10 +630,10 @@ Page({
       product_guige: this.data.product.sku.specName,
       product_num: this.data.order.count,
       make_time: this.data.order.date + ' ' + this.data.order.time,
-      coupon_code: this.data.order.coupon.coupon_code,
+      // coupon_code: this.data.order.coupon.coupon_code,
       remark: this.data.order.msg,
       amount: this.data.product.sku.sale_price * this.data.order.count,
-      total: this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count,
+      // total: this.data.product.sku.sale_price * this.data.order.count - this.data.order.coupon.count,
       mobile: this.data.order.endAddr.mobile,
       username: this.data.order.endAddr.name,
       take_address_info: this.data.order.startAddr ? JSON.stringify(this.data.order.startAddr) : null,
@@ -681,7 +647,7 @@ Page({
     submitOrder.then(res => {
       if (res.data.status) {
         wx.redirectTo({
-          url: '/pages/pay/index?orderId=' + res.data.data.order_id + '&orderSn=' + res.data.data.order_sn + '&count=' + (that.data.product.sku.sale_price * that.data.order.count - that.data.order.coupon.count) + '&isStandard=' + that.data.product.is_standard
+          url: '/pages/pay/index?orderId=' + res.data.data.order_id + '&orderSn=' + res.data.data.order_sn + '&count=' + (that.data.product.sku.sale_price * that.data.order.count) + '&isStandard=' + that.data.product.is_standard
         })
       }
     })

@@ -103,17 +103,6 @@ Page({
   
   },
 
-  // 获取formid
-  formSubmit: function (e) {
-    var that = this
-    var getFormId = wxRequest.postRequest(path.getFormId(), {
-      formid: e.detail.formId
-    });
-    getFormId.then(res => {
-      // console.log(res)
-    })
-  },
-
   pay: function () {
     var that = this
     wx.showLoading({
@@ -130,7 +119,6 @@ Page({
         coupon_code: this.data.coupon.code || null
       });
       getWxpay.then(res => {
-        console.log(res);
         wx.hideLoading()
         if (res.data.status === 1) {
           wx.showModal({
@@ -189,7 +177,7 @@ Page({
   },
 
   gotoCoupon: function () {
-    var url = '../serviceCoupon/index?c_id=' + this.data.cId + '&total=' + this.data.offerPrice + '&from=true'
+    var url = '../serviceCoupon/index?c_id=' + this.data.cId + '&total=' + this.data.offerPrice + '&from=pay'
     wx.navigateTo({
       url: url,
     })
