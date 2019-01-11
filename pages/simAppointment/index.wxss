@@ -138,6 +138,7 @@ textarea {
   left: 176rpx;
   width: 33rpx;
   height: 33rpx;
+  font-size:20rpx;
   color: #fff;
   background: rgba(255, 27, 54, 1);
   border-radius: 50%;

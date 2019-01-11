@@ -8,18 +8,18 @@
   <checkbox-group bindchange="categoryChange">
     <view class='order' wx:for='{{list1}}' wx:key='{{index}}'>
       <view class='c_title'>
-        <checkbox value="{{item.c_id}}" checked="{{item.checked}}" />
+        <checkbox value="{{item.c_id}}" checked="{{item.checked}}" data-index='{{index}}' bindtap='cateTap' />
         <text>{{item.c_name}}</text>
       </view>
       <checkbox-group bindchange="productChange">
-        <view class='product' wx:for='{{item.p_list}}' wx:for-index="prodIndex" wx:for-item="prod" wx:key='{{prodIndex}}'>
+        <view class='product' wx:for='{{item.product_list}}' wx:for-index="prodIndex" wx:for-item="prod" wx:key='{{prodIndex}}'>
           <view class='prod_name'>
-            <checkbox value='{{item.c_id + "," + prod.p_id}}' checked="{{prod.checked}}" />
+            <checkbox value='{{index + "," + prodIndex}}' checked="{{prod.checked}}" data-index='{{index}}' data-prodindex='{{prodIndex}}' bindtap='prodTap' />
             <text>{{prod.p_name}}</text>
           </view>
           <checkbox-group bindchange="skuChange">
             <view class='sku' wx:for='{{prod.sku_list}}' wx:for-index='skuIndex' wx:for-item='sku' wx:key='{{skuIndex}}'>
-              <checkbox value='{{item.c_id + "," + prod.p_id + "," + skuIndex}}' checked="{{sku.checked}}" />
+              <checkbox value='{{index + "," + prodIndex + "," + skuIndex}}' checked="{{sku.checked}}" data-index='{{index}}' data-prodindex='{{prodIndex}}' data-skuindex='{{skuIndex}}' bindtap='skuTap' />
               <view class='sku_title'>{{sku.product_type}} {{sku.product_guige}}</view>
               <view class='price_n_count'>
                 <view class='price'>￥{{sku.price}}</view>
@@ -71,3 +71,22 @@
     </view>
   </checkbox-group>
 </view>
+
+<view class='foot_space'></view>
+
+<view class='footer'>
+  <checkbox-group bindchange="checkAllChange">
+    <checkbox value='list1.c_name' checked="{{allChecked}}" bindtap='checkAll' />全选
+  </checkbox-group>
+
+  <view class='price_n_btn'>
+    <text>应付金额：￥{{allPrice}}</text>
+    <button>去结算</button>
+  </view>
+</view>
+
+<view class='loading' wx:if="{{isLoading}}">
+  <i-spin i-class='loading_icon' fix></i-spin>
+</view>
+
+<view class='nomore' wx:if="{{showNoMore}}">没有更多数据了</view>

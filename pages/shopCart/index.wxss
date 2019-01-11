@@ -151,3 +151,38 @@
   right: 30rpx;
   transform: translateY(-50%);
 }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 750rpx;
+  height: 107rpx;
+  padding: 0 26rpx 0 36rpx;
+  background-color: #fff;
+}
+
+.footer checkbox-group {
+  font-size: 28rpx;
+}
+
+.footer .price_n_btn {
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+}
+
+.footer button {
+  width: 159rpx;
+  height: 72rpx;
+  padding: 0;
+  margin-left: 20rpx;
+  font-size: 30rpx;
+  color: #fff;
+  line-height: 72rpx;
+  background:rgba(49,194,124,1);
+}

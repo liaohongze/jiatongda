@@ -69,6 +69,7 @@ Page({
     this.setData({
       order: app.globalData.pageSimAppoint
     })
+    this.getShopCart()
   },
 
   /**
@@ -417,6 +418,23 @@ Page({
           title: res.data.message,
           icon: 'none',
           duration: 2000
+        })
+      }
+    })
+  },
+
+  getShopCart: function () {
+    var that = this
+    var cartList = wxRequest.postRequest(path.getShopCart(), {
+      page: this.data.currentPage1,
+      page_size: 10,
+      is_standard: 1
+    });
+
+    cartList.then(res => {
+      if (res.data.status) {
+        that.setData({
+          shopCartCount: res.data.data.count
         })
       }
     })

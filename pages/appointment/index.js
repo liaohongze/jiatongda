@@ -16,7 +16,8 @@ Page({
     // couponMsg: '暂无可用优惠券',
     startDate: '',//用于时间选择器的开始时间
     endDate: '', //用于时间选择器的结束时间
-    serverPrice: 0
+    serverPrice: 0,
+    shopCartCount: 0
   },
 
   /**
@@ -80,6 +81,8 @@ Page({
         })
       }
     })
+
+    this.getShopCart()
   },
 
   /**
@@ -635,7 +638,13 @@ Page({
 
     var addToShopcart = wxRequest.postRequest(path.addToShopcart(), post_data);
     addToShopcart.then(res => {
-      console.log(res)
+      if (res.data.status) {
+        wx.showToast({
+          title: '添加成功！',
+          duration: 2000
+        })
+        that.getShopCart()
+      }
     })
   },
 
@@ -720,5 +729,22 @@ Page({
         })
       }
     })
-  }
+  },
+
+  getShopCart: function () {
+    var that = this
+    var cartList = wxRequest.postRequest(path.getShopCart(), {
+      page: this.data.currentPage1,
+      page_size: 10,
+      is_standard: 1
+    });
+
+    cartList.then(res => {
+      if (res.data.status) {
+        that.setData({
+          shopCartCount: res.data.data.count
+        })
+      }
+    })
+  },
 })

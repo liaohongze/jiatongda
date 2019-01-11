@@ -243,5 +243,9 @@ module.exports = {
   // 购物车-添加
   addToShopcart: function () {
     return domain + "/mini_user/cart/add"
+  },
+  // 购物车-获取
+  getShopCart: function () {
+    return domain + "/mini_user/cart/getList"
   }
 }
