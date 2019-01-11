@@ -37,7 +37,7 @@ Page({
     // 所有城市列表 开始 //
     var searchLetter = city.searchLetter;
     var cityList = city.cityList();
-    // console.log(cityInfo);
+    // console.log(cityList);
 
     var sysInfo = wx.getSystemInfoSync();
     // console.log(sysInfo);
@@ -250,8 +250,10 @@ Page({
   },
   // 点击选择城市
   bindCity: function (e) {
-    var selectCity = e.currentTarget.dataset.city;
-    app.globalData.address.selectCity = selectCity
+    var selectCity = e.currentTarget.dataset;
+    console.log(selectCity)
+    app.globalData.address.selectCity = selectCity.city
+    app.globalData.address.selectAdcode = selectCity.adcode
     this.setData({ selectCity: selectCity }, () => { wx.navigateBack() })
   },
   // 所有城市列表 方法结束 //

@@ -57,8 +57,8 @@
   <view class='content'>
     <image class='close' src='/img/delete.png' bintap='closeGetCoupon'></image>
     <image class='redbag' src='/img/redbag.png'></image>
-    <text><text class='money_symbol'>￥</text>500</text>
-    <button>马上领取</button>
+    <text><text class='money_symbol'>￥</text>{{couponPrice}}</text>
+    <button bindtap='getCoupon'>马上领取</button>
   </view>
 </view>
 

@@ -25,6 +25,7 @@ App({
       location: {},
       street_number: '',
       selectCity: '',
+      selectAdcode: '',
       adcode: ''
     },
     serviceTel: '',

@@ -570,6 +570,75 @@ Page({
     })
   },
 
+  addToShopcart: function () {
+    if (!this.data.product.sku.typeName) {
+      wx.showToast({
+        title: '产品类型不能为空！',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (!this.data.product.sku.specName) {
+      wx.showToast({
+        title: '产品规格不能为空！',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (this.data.order.endAddr == '') {
+      wx.showToast({
+        title: '终点地址不能为空！',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (this.data.product.sku.isMoreAddr) {
+      if (this.data.order.startAddr == '') {
+        wx.showToast({
+          title: '起始地址不能为空！',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
+    }
+    if (this.data.order.date == '') {
+      wx.showToast({
+        title: '服务日期不能为空！',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (this.data.order.time == '') {
+      wx.showToast({
+        title: '服务时间不能为空！',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    var that = this
+    var post_data = {
+      p_id: this.data.product.p_id,
+      num: this.data.order.count,
+      remark: this.data.order.msg,
+      address_id: this.data.order.endAddr.id,
+      is_standard: 1,
+      make_time: this.data.order.date + ' ' + this.data.order.time,
+      sku_id: this.data.product.sku.id,
+      take_address_id: this.data.order.startAddr ? this.data.order.startAddr.id : null
+    };
+
+    var addToShopcart = wxRequest.postRequest(path.addToShopcart(), post_data);
+    addToShopcart.then(res => {
+      console.log(res)
+    })
+  },
+
   submitOrder: function () {
     if (!this.data.product.sku.typeName) {
       wx.showToast({

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "购物车",
+  "usingComponents": {
+    "i-tabs": "../../extend/iview/tabs/index",
+    "i-tab": "../../extend/iview/tab/index",
+    "i-input-number": "../../extend/iview/input-number/index",
+    "i-icon": "../../extend/iview/icon/index"
+  }
+}

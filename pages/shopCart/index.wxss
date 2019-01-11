@@ -1,0 +1,153 @@
+/* pages/shopCart/index.wxss */
+.order {
+  margin-bottom: 24rpx;
+  background-color: #fff;
+}
+
+.c_title {
+  position: relative;
+  padding: 28rpx 0 28rpx 100rpx;
+  font-size: 33rpx;
+  font-weight: bold;
+}
+
+.c_title > checkbox {
+  position: absolute;
+  left: 30rpx;
+  top: 25rpx;
+}
+
+.product {
+  position: relative;
+  padding-top: 20rpx;
+}
+
+.product::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 651rpx;
+  height: 1rpx;
+  background-color: #F4F4F4;
+  content: '';
+}
+
+.prod_name {
+  padding: 0 0 28rpx 30rpx;
+  font-size: 28rpx;
+}
+
+.prod_name > checkbox {
+  margin-right: 12rpx;
+}
+
+.sku {
+  position: relative;
+  padding-left: 120rpx;
+  font-size: 31rpx;
+}
+
+.sku .price_n_count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 33rpx 32rpx 0;
+}
+
+.sku .price_n_count .price {
+  color: #FF4949;
+}
+
+.sku > checkbox {
+  position: absolute;
+  top: 50%;
+  left: 50rpx;
+  transform: translateY(-50%);
+}
+
+.order .time {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx 30rpx 30rpx 100rpx;
+  font-size: 30rpx;
+}
+
+.order .time::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 700rpx;
+  height: 1rpx;
+  background-color: #F4F4F4;
+  content: '';
+}
+
+.coupon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 116rpx;
+  padding: 0 30rpx 0 100rpx;
+  font-size: 30rpx;
+  background-color: #fff;
+}
+
+.coupon::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 700rpx;
+  height: 1rpx;
+  background-color: #F4F4F4;
+  content: '';
+}
+
+/* 联系方式 */
+.addr {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 30rpx 30rpx 30rpx 100rpx;
+  font-size: 30rpx;
+  background-color: #fff;
+}
+
+.addr::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 700rpx;
+  height: 1rpx;
+  background-color: #F4F4F4;
+  content: '';
+}
+
+.addr > image {
+  display: inline-block;
+  width: 38rpx;
+  height: 48rpx;
+  margin-right: 30rpx;
+}
+
+.addr > .tip,
+.addr > .info {
+  display: inline-block;
+}
+.addr > .info view {
+  font-size: 23rpx;
+  color: #a6a6a6;
+}
+
+.addr .icon {
+  position: absolute;
+  top: 50%;
+  right: 30rpx;
+  transform: translateY(-50%);
+}

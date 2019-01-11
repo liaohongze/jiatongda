@@ -118,29 +118,68 @@ textarea {
   opacity: 1;
   background-color: #fff;
 }
-.foot view {
-  flex: 1;
+
+.foot .cart_n_price {
+  display: flex;
+  width: 410rpx;
   height: 100%;
-  padding-top: 18rpx;
-  padding-left: 40rpx;
+}
+
+.foot .cart_n_price .origin_price {
+  width: 290rpx;
+  padding-right: 10rpx;
+  font-size: 29rpx;
+  line-height: 118rpx;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.foot .cart_n_price .origin_price text {
+  color: #FF4949;
+}
+.foot navigator {
+  position: relative;
+  width: 120rpx;
+  height: 118rpx;
+  text-align: center;
   background-color: #fff;
 }
-.foot view > text {
+
+.foot navigator text {
+  position: absolute;
+  top: 9rpx;
+  left: 65rpx;
+  width: 33rpx;
+  height: 33rpx;
+  color: #fff;
+  background: rgba(255, 27, 54, 1);
+  border-radius: 50%;
+}
+
+.foot navigator image {
+  width: 41rpx;
+  height: 41rpx;
+  margin-top: 20rpx;
+}
+
+.foot navigator view {
   display: block;
+  font-size: 23rpx;
+  color: #777;
 }
-.foot .origin_price {
-  font-size: 22rpx;
-  color: #909090
+
+
+.foot .add_shopcart {
+  width: 170rpx;
+  height: 100%;
+  font-size: 29rpx;
+  color: #555;
+  line-height: 118rpx;
+  background-color: #FFC540;
+  border-radius: 0;
 }
-.foot .price {
-  font-size: 27rpx;
-}
-.foot .price text {
-  font-size: 37rpx;
-  color: #fa5741;
-}
-.foot button {
-  width: 288rpx;
+.foot .sbumit {
+  width: 170rpx;
   height: 100%;
   font-size: 29rpx;
   color: #fff;

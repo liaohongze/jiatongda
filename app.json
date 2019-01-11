@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/appointment/index",
+    "pages/shopCart/index",
     "pages/recommender/index",
     "pages/withdraw/index",
     "pages/pay/index",
@@ -11,7 +13,6 @@
     "pages/user/index",
     "pages/register/index",
     "pages/evaluate/index",
-    "pages/appointment/index",
     "pages/customized/index",
     "pages/article/index",
     "pages/repairDetail/index",
@@ -44,5 +45,10 @@
   },
   "networkTimeout": {
     "uploadFile": 60000
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "请授权位置权限"
+    }
   }
 }

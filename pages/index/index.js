@@ -25,6 +25,7 @@ Page({
     recommender: null,
     registerType: 1,
     showGetCoupon: false,
+    couponPrice: 0,
     showTabBar: false
   },
 
@@ -208,6 +209,39 @@ Page({
     })
   },
 
+  getCoupon: function () {
+    var that = this
+    var rightGet = wxRequest.postRequest(path.rightGet());
+    rightGet.then(res => {
+      if (res.data.status) {
+        that.setData({
+          showGetCoupon: false
+        }, () => {
+          wx.showToast({
+            title: '领取成功',
+            duration: 2500
+          })
+        })
+      }
+    })
+  },
+
+  // 获取优惠券总值信息
+  couponNewInfo: function () {
+    var that = this
+    var couponNewInfo = wxRequest.postRequest(path.couponNewInfo(), {
+      adcode: app.globalData.address.adcode
+    });
+    couponNewInfo.then(res => {
+      if (res.data.status && res.data.data.get) {
+        that.setData({
+          couponPrice: res.data.data.price,
+          showGetCoupon: true
+        })
+      }
+    })
+  },
+
   //点击去授权手机号,获取formid
   getFormId: function(e) {
     var that = this
@@ -276,6 +310,7 @@ Page({
             if (result.data.status) {
               app.globalData.isRegister = true
               app.globalData.userInfo.uid = result.data.data.uid
+              that.couponNewInfo()
             } else {
               wx.showToast({
                 title: result.data.message,

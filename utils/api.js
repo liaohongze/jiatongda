@@ -215,5 +215,33 @@ module.exports = {
   // 推广明细
   getPromotionList: function () {
     return domain + "/mini_user/wx_user/getPromotionList"
+  },
+  // 领券中心列表
+  getCouponList: function () {
+    return domain + "/mini_user/coupon/getCouponList"
+  },
+  // 通过优惠券id领取优惠券
+  takeCoupon: function () {
+    return domain + "/mini_user/coupon/tackCoupon"
+  },
+  // 付费优惠券购买
+  buyCoupon: function () {
+    return domain + "/mini_user/coupon/buyCoupon"
+  },
+  // 充值并获取支付参数
+  userRechargeInit: function () {
+    return domain + "/mini_user/wx_user/UserRechargeInit"
+  },
+  // 获取优惠券总值信息
+  couponNewInfo: function () {
+    return domain + "/mini_user/coupon/couponNewInfo"
+  },
+  // 马上领取
+  rightGet: function () {
+    return domain + "/mini_user/coupon/rightGet"
+  },
+  // 购物车-添加
+  addToShopcart: function () {
+    return domain + "/mini_user/cart/add"
   }
 }

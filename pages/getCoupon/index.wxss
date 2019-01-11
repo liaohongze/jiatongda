@@ -87,6 +87,10 @@
   color: #7D7D7D;
 }
 
+.coupon .info_n_action .action .type_price {
+  color: #FF3A48;
+}
+
 .coupon .info_n_action .action button {
   width: 136rpx;
   height: 47rpx;
@@ -109,4 +113,51 @@
   line-height: 48rpx;
   font-size: 20rpx;
   color: #666;
+}
+
+/* 领取优惠劵 */
+.get_coupon {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.get_coupon .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.get_coupon .close {
+  position: absolute;
+  top: -50rpx;
+  right: 0;
+  width: 50rpx;
+  height: 50rpx;
+}
+.get_coupon .redbag {
+  width: 473rpx;
+  height: 566rpx;
+}
+.get_coupon .content > text {
+  position: absolute;
+  top: 150rpx;
+  left: 50%;
+  font-size: 83rpx;
+  color: #FF2C2C;
+  transform: translateX(-50%);
+}
+.get_coupon .content .money_symbol {
+  font-size: 45rpx;
+}
+.get_coupon .content button {
+  width: 372rpx;
+  height: 73rpx;
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  color: #893A0F;
+  background-color: #FFDE1B;
+  border-radius: 73rpx;
 }

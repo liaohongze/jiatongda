@@ -32,7 +32,7 @@
 <scroll-view scroll-y="true" style="height:{{winHeight}}px" bindscroll="bindScroll" scroll-top="{{scrollTop}}" wx:if="{{!searchStatus}}">
   <view class="selection" wx:for="{{cityList}}" wx:key="{{item.initial}}">
     <view class="item_letter">{{item.initial}}</view>
-    <view class="item_city" wx:for="{{item.cityInfo}}" wx:for-item="ct" wx:key="{{ct.id}}" data-city="{{ct.city}}" bindtap="bindCity">
+    <view class="item_city" wx:for="{{item.cityInfo}}" wx:for-item="ct" wx:key="{{ct.id}}" data-city="{{ct.city}}" data-adcode='{{ct.code}}' bindtap="bindCity">
       {{ct.city}}
     </view>
   </view>

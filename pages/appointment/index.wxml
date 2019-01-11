@@ -100,10 +100,18 @@
 <view class='foot_space'></view>
 
 <view class='foot'>
-  <view>
-    <text class='origin_price'>服务金额：￥{{serverPrice || 0}}</text>
+  <view class='cart_n_price'>
+    <navigator url='/pages/shopCart/index'>
+      <text>{{shopCartCount}}</text>
+      <image src='/img/shopcar.png'></image>
+      <view>购物车</view>
+    </navigator>
+    <text class='origin_price'>合计：<text>￥{{serverPrice || 0}}</text> </text>
   </view>
   <form report-submit="true" bindsubmit="formSubmit">
-    <button catchtap='submitOrder' form-type='submit'>提交订单</button>
+    <button class='add_shopcart' catchtap='addToShopcart' form-type='submit'>加入购物车</button>
+  </form>
+  <form report-submit="true" bindsubmit="formSubmit">
+    <button class='sbumit' catchtap='submitOrder' form-type='submit'>提交订单</button>
   </form>
 </view>
