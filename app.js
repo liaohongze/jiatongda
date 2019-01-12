@@ -58,7 +58,14 @@ App({
     },
     orderType: '', //由于switchtab不能带参数，跳转之前先设定该参数，跳转之后从这里取参
     editAddr: {},
-    shopCart: []
+    pageShopCart: {
+      coupon: {
+        index: '',
+        code: '',
+        prices: 0
+      },
+
+    }
   },
   onLaunch: function () {
      // 展示本地存储能力

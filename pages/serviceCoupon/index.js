@@ -13,7 +13,8 @@ Page({
     unUseful: [],
     cId: '',
     total: 0,
-    fromPage: 'pay'
+    fromPage: 'pay',
+    shopCartIndex: ''
   },
 
   /**
@@ -23,7 +24,8 @@ Page({
     this.setData({
       cId: options.c_id,
       total: parseFloat(options.total),
-      fromPage: options.from
+      fromPage: options.from,
+      shopCartIndex: options.index || null
     }, () => {
       this.getCoupon()
     })
@@ -120,13 +122,13 @@ Page({
         code: e.currentTarget.dataset.code,
         prices: e.currentTarget.dataset.price
       }
+    } else if (this.data.fromPage === 'shopCart') {
+      app.globalData.pageShopCart.coupon = {
+        code: e.currentTarget.code,
+        prices: e.currentTarget.dataset.price,
+        index: this.data.shopCartIndex
+      }
     }
-    //  else {
-    //   app.globalData.pageAppointment.coupon = {
-    //     id: e.currentTarget.id,
-    //     count: e.currentTarget.dataset.price
-    //   }
-    // }
 
     wx.navigateBack()
   }

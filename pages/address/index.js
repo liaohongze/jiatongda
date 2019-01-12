@@ -12,6 +12,8 @@ Page({
     noAddress: false,
     fromPage: '',
     productid: '',
+    idx: '',
+    addrtype: '',
     adcode: '',
     actions: [
       {
@@ -34,6 +36,13 @@ Page({
       fromPage: options.from,
       productid: options.id
     })
+
+    if (options.from === 'shopCart') {
+      this.setData({
+        idx: options.idx,
+        addrtype: options.addrtype
+      })
+    }
   },
 
   /**
@@ -92,7 +101,6 @@ Page({
       product_id: that.data.productid
     });
     addressList.then(res => {
-      // console.log(res)
       if (res.data.status) {
         if (JSON.stringify(res.data.data) == '{}') {
           that.setData({
@@ -172,6 +180,10 @@ Page({
         app.globalData.pageAppointment.endAddr = obj
       } else if (this.data.fromPage == 'simAppoint') {
         app.globalData.pageSimAppoint.address = obj
+      } else if (this.data.fromPage == 'shopCart') {
+        app.globalData.pageShopCart.idx = this.data.idx
+        app.globalData.pageShopCart.addrtype = this.data.addrtype
+        app.globalData.pageShopCart[this.data.addrtype] = obj
       }
       wx.navigateBack()
     } else {

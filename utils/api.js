@@ -247,5 +247,13 @@ module.exports = {
   // 购物车-获取
   getShopCart: function () {
     return domain + "/mini_user/cart/getList"
+  },
+  // 根据购物车返回的产品id，返回对应的可选地址
+  shopCartAddr: function () {
+    return domain + "/mini_user/cart/getCanUseAddress"
+  },
+  // 获取产品的[四，五]级标签
+  productLabels: function () {
+    return domain + "/mini_user/service/product_labels"
   }
 }

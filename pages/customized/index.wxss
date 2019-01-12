@@ -12,6 +12,15 @@
   background-color: #fff;
 }
 
+.fourth_step {
+  padding-left: 30rpx;
+}
+
+.fourth_list {
+  padding-left: 0;
+  border-bottom: 1rpx solid #ddd;
+}
+
 .list text {
   box-sizing: border-box;
   display: inline-block;
@@ -29,6 +38,11 @@
 .list .active {
   color: #44d4a3;
   border-color: #44d4a3;
+}
+
+.list .list {
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 button {

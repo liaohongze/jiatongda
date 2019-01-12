@@ -20,6 +20,16 @@
   </view>
 </view>
 
+<view class='fourth_step' wx:if="{{thirdIndex}}">
+  <text class='title'>其他</text>
+  <view class='list fourth_list' wx:for="{{fourthList}}" wx:key="{{index}}">
+    <text class='{{fourthIndex === (index + 1) ? "active" : ""}}' data-i='{{index + 1}}' id='{{item.spl_id}}'>{{item.name}}</text>
+    <view class='list'>
+      <text wx:for="{{item.child_labels}}" wx:for-index='idx' wx:for-item='label' wx:key="{{idx}}" class='{{fifthIndex === (idx + 1) ? "active" : ""}}' data-i='{{idx + 1}}' id='{{label.spl_id}}'>{{label.name}}</text>
+    </view>
+  </view>
+</view>
+
 <form report-submit="true" bindsubmit="formSubmit">
   <button form-type='submit' catchtap='gotoSimAppointment' wx:if="{{thirdIndex}}">我要下单</button>
 </form>

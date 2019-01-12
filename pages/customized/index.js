@@ -12,9 +12,12 @@ Page({
     firstList: [],
     secondList: [],
     thirdList: [],
+    fourthList: [],
     firstIndex: 0,
     secondIndex: 0,
     thirdIndex: 0,
+    fourthIndex: 0,
+    fifthIndex: 0,
     productId: null
   },
 
@@ -98,6 +101,7 @@ Page({
           secondList: res.data.data.list,
           secondIndex: 0,
           thirdIndex: 0,
+          fourthIndex: 0
         })
       }
     })
@@ -115,16 +119,30 @@ Page({
           secondIndex: e.currentTarget.dataset.i,
           thirdList: res.data.data.data,
           thirdIndex: 0,
+          fourthIndex: 0
         })
       }
     })
   },
 
   selectThirdStep: function (e) {
-    this.setData({
-      thirdIndex: e.currentTarget.dataset.i,
-      productId: e.target.id
+    var that = this
+    var productLabels = wxRequest.postRequest(path.productLabels(), {
+      product_id: e.target.id
+    });
+    productLabels.then(res => {
+      if (res.data.status) {
+        that.setData({
+          thirdIndex: e.currentTarget.dataset.i,
+          productId: e.target.id,
+          fourthList: res.data.data.list
+        })
+      }
     })
+    // this.setData({
+    //   thirdIndex: e.currentTarget.dataset.i,
+    //   productId: e.target.id
+    // })
   },
 
   gotoSimAppointment: function () {

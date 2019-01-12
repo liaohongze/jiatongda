@@ -22,15 +22,21 @@
               <checkbox value='{{index + "," + prodIndex + "," + skuIndex}}' checked="{{sku.checked}}" data-index='{{index}}' data-prodindex='{{prodIndex}}' data-skuindex='{{skuIndex}}' bindtap='skuTap' />
               <view class='sku_title'>{{sku.product_type}} {{sku.product_guige}}</view>
               <view class='price_n_count'>
-                <view class='price'>￥{{sku.price}}</view>
-                <i-input-number value="{{ sku.count }}" min="1" max="100" step="1" bindchange="countChange" />
+                <view class='price'>￥{{sku.sale_price}}</view>
+                <!-- <i-input-number value="{{ sku.num }}" min="1" max="100" step="1" bindchange="countChange" /> -->
+
+                <view class='input_number'>
+                  <button class='reduce' catchtap='reduce' data-index='{{index}}' data-prodindex='{{prodIndex}}' data-skuindex='{{skuIndex}}'>-</button>
+                  <input type='number' value='{{ sku.num }}' bindinput='numChange' data-index='{{index}}' data-prodindex='{{prodIndex}}' data-skuindex='{{skuIndex}}'></input>
+                  <button class='plus' catchtap='plus' data-index='{{index}}' data-prodindex='{{prodIndex}}' data-skuindex='{{skuIndex}}'>+</button>
+                </view>
               </view>
             </view>
           </checkbox-group>
         </view>
       </checkbox-group>
 
-      <navigator url='../address/index?from=startAddr&id={{product.p_id}}' class='addr' wx:if="{{product.sku.isMoreAddr}}">
+      <view class='addr' wx:if="{{item.isMoreAddr}}" bindtap='selectAddr' data-index='{{index}}' data-cid='{{item.c_id}}' data-addrtype='start'>
         <image src='../../img/icon-start.png' mode='aspectFit' />
         <view class='info'>
           <text>{{item.startAddr.name}} {{item.startAddr.mobile}}</text>
@@ -39,9 +45,9 @@
         <view class='icon'>
           <i-icon type="enter" size="24" color="#cccccc" />
         </view>
-      </navigator>
+      </view>
 
-      <navigator url='../address/index?from=endAddr&id={{product.p_id}}' class='addr'>
+      <view class='addr' bindtap='selectAddr' data-index='{{index}}' data-cid='{{item.c_id}}' data-addrtype='end'>
         <image src='../../img/icon-end.png' mode='aspectFit' />
         <view class='info'>
           <text>{{item.endAddr.name}} {{item.endAddr.mobile}}</text>
@@ -50,23 +56,44 @@
         <view class='icon'>
           <i-icon type="enter" size="24" color="#cccccc" />
         </view>
-      </navigator>
+      </view>
 
-      <view class='coupon' catchtap='selectCoupon'>
+      <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange" data-index='{{index}}'>
+        <view class='date'>
+          <view class='left_side'>
+            <i-icon type="activity" size="26" color="#09bb07" />
+            <text>上门服务日期</text>
+          </view>
+          <view class='date_right'>
+            <text>{{item.date}}</text>
+            <i-icon type="enter" size="24" color="#cccccc" />
+          </view>
+        </view>
+      </picker>
+
+      <picker disabled='{{item.date === ""}}' mode="multiSelector" value="{{index}}" range="{{time}}" bindchange="bindTimeChange" bindcolumnchange="timeColumnChange" data-index='{{index}}'>
+        <view class='time' bindtap='clickTimePicker' data-index='{{index}}'>
+          <view class='left_side'>
+            <i-icon type="clock" size="26" color="#09bb07" />
+            <text>上门服务时间</text>
+          </view>
+          <view class='date_right'>
+            <text>{{item.time}}</text>
+            <i-icon type="enter" size="24" color="#cccccc" />
+          </view>
+        </view>
+      </picker>
+
+      <view class='coupon' catchtap='selectCoupon' catchtap='selectCoupon' data-index='{{index}}' data-cid='{{item.c_id}}'>
         <view class='left_side'>
           <i-icon type="coupons" size="26" color="#09bb07" />
           <text>优惠券</text>
         </view>
         <view class='right_side'>
-          <text wx:if="{{order.coupon.count > 0}}">￥{{order.coupon.count}}</text>
+          <text wx:if="{{item.coupon.prices > 0}}">￥{{item.coupon.prices}}</text>
           <text wx:else>{{couponMsg}}</text>
           <i-icon type="enter" size="24" color="#cccccc" />
         </view>
-      </view>
-
-      <view class='time'>
-        <text>时间</text>
-        <text>{{item.time}}</text>
       </view>
     </view>
   </checkbox-group>
@@ -81,7 +108,7 @@
 
   <view class='price_n_btn'>
     <text>应付金额：￥{{allPrice}}</text>
-    <button>去结算</button>
+    <button bindtap='takeOrder'>去结算</button>
   </view>
 </view>
 
