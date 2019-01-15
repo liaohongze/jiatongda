@@ -93,6 +93,48 @@ textarea {
   background-color: #fff;
 }
 
+/* 四、五级 */
+.labels {
+  padding:36rpx;
+  margin-top: 21rpx;
+  font-size: 30rpx;
+  background-color: #fff;
+}
+
+.labels .title {
+  display: block;
+  margin-bottom: 10rpx;
+  color: #000;
+}
+
+.labels .fourth_list {
+  margin-bottom: 25rpx;
+  border-bottom: 1rpx solid #ddd;
+}
+
+.labels .fourth_list:last-of-type {
+  border-color: transparent;
+}
+
+.labels .fifth_list {
+  padding-bottom: 30rpx;
+}
+
+.labels .fifth_list > text {
+  padding: 16rpx 30rpx;
+  margin-right: 13rpx;
+  margin-bottom: 10rpx;
+  font-size: 23rpx;
+  color: #181818;
+  background-color: #F9F9F9;
+  border-radius: 3rpx;
+}
+
+.labels .fifth_list > .active {
+  color: #fff;
+  background-color: #00C482;
+}
+
 /* 协议 */
 .agreement {
   padding: 30rpx;

@@ -80,6 +80,15 @@
   </view>
 </picker>
 
+<view class='labels' wx:if='{{product.lables.length}}'>
+  <view class='fourth_list' wx:for='{{product.lables}}' wx:key='{{index}}'>
+    <text class='title'>{{item.name}}</text>
+    <view class='fifth_list' wx:for='{{item.child_labels}}' wx:for-item='label' wx:for-index='idx' wx:key='{{idx}}'>
+      <text class='{{label.checked ? "active" : ""}}' bindtap='fifthTap' data-index='{{index}}' data-idx='{{idx}}'>{{label.name}}</text>
+    </view>
+  </view>
+</view>
+
 <!-- <view class='coupon' catchtap='selectCoupon'>
   <view class='left_side'>
     <i-icon type="coupons" size="26" color="#09bb07" />
@@ -101,7 +110,7 @@
 
 <view class='foot'>
   <view class='cart_n_price'>
-    <navigator url='/pages/shopCart/index'>
+    <navigator url='/pages/shopCart/index?tab=1'>
       <text>{{shopCartCount}}</text>
       <image src='/img/shopcar.png'></image>
       <view>购物车</view>

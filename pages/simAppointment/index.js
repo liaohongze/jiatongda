@@ -14,7 +14,9 @@ Page({
     product: {},
     startDate: '', //用于时间选择器的开始时间
     endDate: '', //用于时间选择器的结束时间
-    files: []
+    files: [],
+    expected: 0,
+    shopCartCount: 0
   },
 
   /**
@@ -66,9 +68,10 @@ Page({
    */
   onShow: function() {
     this.setData({
-      order: app.globalData.pageSimAppoint
+      order: app.globalData.pageSimAppoint,
+      order: app.globalData.pageSimAppoint,
     })
-    this.getShopCart()
+    this.cartNum()
   },
 
   /**
@@ -106,6 +109,12 @@ Page({
 
   },
 
+  expectedChange: function (e) {
+    this.setData({
+      expected: e.detail.value
+    })
+  },
+
   getProductById: function(id) {
     var that = this
     //获取服务类下的某产品信息获取服务类下的某产品信息[规格类型等]
@@ -116,6 +125,14 @@ Page({
       if (res.data.status) {
         that.setData({
           product: res.data.data
+        }, () => {
+          if (app.globalData.pageCustomized.fourthList.length) {
+            let product = this.data.product
+            product.lables = app.globalData.pageCustomized.fourthList
+            this.setData({
+              product
+            })
+          }
         })
       }
     })
@@ -220,7 +237,7 @@ Page({
       sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function(res) {
-        console.log(res)
+        // console.log(res)
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         var shouldAddImg = true
         res.tempFiles.map(item => {
@@ -256,7 +273,7 @@ Page({
     })
   },
 
-  verify: function() {
+  verify: function({currentTarget: {dataset: {type}}}) {
     if (!this.data.order.address.name) {
       wx.showToast({
         title: '服务地址不能为空！',
@@ -289,7 +306,7 @@ Page({
     if (this.data.files.length) {
       uploadImage()
     } else {
-      this.submitOrder(fileNames)
+      type === 'submit' ? this.submitOrder(fileNames) : this.addToShopCart(fileNames)
     }
 
     function uploadImage() {
@@ -315,9 +332,9 @@ Page({
             } else {
               wx.hideLoading()
               wx.showLoading({
-                title: '正在提交订单...'
+                title: type === 'submit' ? '正在提交订单...' : '添加到购物车'
               })
-              that.submitOrder(fileNames)
+              type === 'submit' ? that.submitOrder(fileNames) : that.addToShopCart(fileNames)
             }
           } else {
             wx.hideLoading()
@@ -344,52 +361,32 @@ Page({
     }
   },
 
-  addToShopCart: function () {
-    // 1、构建订单对象
-    // 2、判断购物车内是否有产品名称、地址、日期、时间都相同的订单
-    // 3、如果有，提示已经添加过相同的产品
-    // 4、如果没有，加入购物车，重新获取购物车数据，提示添加成功
-    // var that = this
-    // var order = {
-    //   obj_name: that.data.product.p_name,
-    //   obj_id: that.data.product.p_id,
-    //   c_id: this.data.product.c_id,
-    //   data: that.data.order.date,
-    //   time: that.data.order.time,
-    //   make_time: that.data.order.date + ' ' + that.data.order.time,
-    //   remark: that.data.order.msg,
-    //   mobile: that.data.order.address.mobile,
-    //   username: that.data.order.address.name,
-    //   address_info: JSON.stringify(that.data.order.address),
-    //   order_type: 1,
-    //   file_name: fileNames.substring(0, fileNames.length - 1)
-    // }
+  addToShopCart: function (fileNames) {
+    var that = this
+    var post_data = {
+      p_id: this.data.product.p_id,
+      remark: this.data.order.msg,
+      address_id: this.data.order.address.id,
+      expected_quotation: this.data.expected,
+      is_standard: 0,
+      date: this.data.order.date,
+      time: this.data.order.time,
+      lables: that.getSelectedLabel(),
+      take_address_id: this.data.order.startAddr ? this.data.order.startAddr.id : null,
+      file_name: fileNames.substring(0, fileNames.length - 1)
+    };
 
-    // var hadOrder = false
-    // var shopCart = app.globalData.shopCart
-    // shopCart.map(item => {
-    //   if (item.obj_id === order.obj_id && item.mobile === order.mobile && item.username === order.username && item.address_info === order.address_info && item.data === order.data && item.time === order.time) {
-    //     hadOrder = true
-    //   }
-    // })
-
-    // if (hadOrder) {//购物车里已经有该订单
-    //   wx.showToast({
-    //     title: '已有该订单，师傅报价订单不能重复添加',
-    //     icon: 'none',
-    //     duration: 2500
-    //   })
-    //   return
-    // } else {
-    //   shopCart.push(order)
-    //   this.setData({
-    //     shopCartCount: shopCart.length
-    //   })
-    //   wx.showToast({
-    //     title: '添加成功',
-    //     duration: 2000
-    //   })
-    // }
+    var addToShopcart = wxRequest.postRequest(path.addToShopcart(), post_data);
+    addToShopcart.then(res => {
+      if (res.data.status) {
+        wx.hideLoading()
+        wx.showToast({
+          title: '添加成功！',
+          duration: 2000
+        })
+        that.cartNum()
+      }
+    })
   },
 
   submitOrder: function (fileNames) {
@@ -397,13 +394,15 @@ Page({
     var submitOrder = wxRequest.postRequest(path.submitOrder(), {
       obj_name: that.data.product.p_name,
       obj_id: that.data.product.p_id,
-      c_id: this.data.product.c_id,
+      c_id: that.data.product.c_id,
       make_time: that.data.order.date + ' ' + that.data.order.time,
       remark: that.data.order.msg,
       mobile: that.data.order.address.mobile,
       username: that.data.order.address.name,
       address_info: JSON.stringify(that.data.order.address),
       order_type: 1,
+      expected_quotation: that.data.expected,
+      lables: that.getSelectedLabel(),
       file_name: fileNames.substring(0, fileNames.length - 1)
     });
     submitOrder.then(result => {
@@ -422,20 +421,47 @@ Page({
     })
   },
 
-  getShopCart: function () {
+  cartNum: function () {
     var that = this
-    var cartList = wxRequest.postRequest(path.getShopCart(), {
-      page: this.data.currentPage1,
-      page_size: 10,
-      is_standard: 1
+    var cartNum = wxRequest.postRequest(path.cartNum(), {
+      is_standard: 0
     });
 
-    cartList.then(res => {
+    cartNum.then(res => {
       if (res.data.status) {
         that.setData({
           shopCartCount: res.data.data.count
         })
       }
     })
-  }
+  },
+
+  fifthTap: function ({ currentTarget: { dataset: { index, idx } } }) {
+    let product = this.data.product
+    product.lables[index].child_labels[idx].checked = !product.lables[index].child_labels[idx].checked
+
+    this.setData({
+      product
+    })
+  },
+
+  getSelectedLabel: function () {
+    let splList = []
+    this.data.product.lables.map(item => {
+      let hasCheck = false, child_labels = []
+      item.child_labels.map(label => {
+        if (label.checked) {
+          hasCheck = true
+          child_labels.push(label)
+        }
+      })
+
+      if (hasCheck) {
+        item.child_labels = child_labels
+        splList.push(item)
+      }
+    })
+
+    return splList
+  },
 })

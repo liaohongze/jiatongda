@@ -8,7 +8,7 @@
 <!-- 订单 -->
 <view class='order' report-submit="true" bindsubmit="formSubmit">
   <text class='order_title'>我的订单</text>
-  <navigator open-type="switchTab" url='/pages/orders/index'>
+  <navigator open-type="redirectTo" url='/pages/orders/index'>
     <image src="../../img/order-icon1.png"></image>
     <text>任务</text>
   </navigator>

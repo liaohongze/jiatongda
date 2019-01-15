@@ -59,12 +59,20 @@ App({
     orderType: '', //由于switchtab不能带参数，跳转之前先设定该参数，跳转之后从这里取参
     editAddr: {},
     pageShopCart: {
+      address: {
+        idx: '',
+        addrtype: '',
+        addr: {},
+      },
       coupon: {
         index: '',
-        code: '',
+        coupon_code: '',
+        coupon_id: '',
         prices: 0
-      },
-
+      }
+    },
+    pageCustomized: {
+      fourthList: []
     }
   },
   onLaunch: function () {

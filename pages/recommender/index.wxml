@@ -2,12 +2,13 @@
 <view class='form'>
   <view class='form_item'>
     <label>推荐码</label>
-    <input type='text' value="{{reCode}}" bindinput='reCodeChange' placeholder='推荐我注册的用户/门店推荐码'></input>
+    <text wx:if='{{hasbind}}'>{{reCode}}</text>
+    <input type='text' value="{{reCode}}" bindinput='reCodeChange' placeholder='推荐我注册的用户/门店推荐码' wx:else></input>
   </view>
 </view>
 
 <view class='tip'>首次填写将不可再更改，请谨慎填写！</view>
 
 <form report-submit="true" bindsubmit="formSubmit">
-  <button class='save_btn' catchtap='save' form-type='submit' disabled='{{disableBtn}}'>保存</button>
+  <button class='save_btn' catchtap='save' form-type='submit' disabled='{{disableBtn}}' wx:if='{{!hasbind}}'>保存</button>
 </form>

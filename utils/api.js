@@ -255,5 +255,37 @@ module.exports = {
   // 获取产品的[四，五]级标签
   productLabels: function () {
     return domain + "/mini_user/service/product_labels"
+  },
+  // 购物车查询数量
+  cartNum: function () {
+    return domain + "/mini_user/cart/cartNum"
+  },
+  // 购物车多选订单&提交
+  submitShopcart: function () {
+    return domain + "/mini_user/cart/submitOrder"
+  },
+  // 购物车下单支付
+  shopcartPay: function () {
+    return domain + "/mini_user/cart/blancePay"
+  },
+  // 删除选中的购物车中的商品
+  deleteShopcarProd: function () {
+    return domain + "/mini_user/cart/delete"
+  },
+  // 判断有没有绑定父级
+  hasBind: function () {
+    return domain + "/mini_user/wx_user/hasBind"
+  },
+  // 获取小程序端推荐码
+  getRememberNo: function () {
+    return domain + "/mini_user/wx_user/getRememberNo"
+  },
+  // 绑定父级
+  bindParent: function () {
+    return domain + "/mini_user/wx_user/bindParent"
+  },
+  // 获取推荐服务产品
+  recommenderProd: function () {
+    return domain + "/mini_user/service/select_remember_product"
   }
 }

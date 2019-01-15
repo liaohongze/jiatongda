@@ -14,7 +14,8 @@ Page({
     balance: '',
     cash: 0,
     countPlaceHolder: '',
-    seriveCharge: '0'
+    seriveCharge: '0',
+    rate: 0
   },
 
   /**
@@ -83,7 +84,8 @@ Page({
   },
   inputChange: function (e) {
     this.setData({
-      cash: parseFloat(e.detail.value)
+      cash: parseFloat(e.detail.value),
+      seriveCharge: (parseFloat(e.detail.value) * this.data.rate).toFixed(2)
     })
   },
 
@@ -105,10 +107,10 @@ Page({
     //查询提现提示信息
     var getWithdrawTip = wxRequest.postRequest(path.getWithdrawTip());
     getWithdrawTip.then(res => {
-      console.log(res)
       if (res.data.status) {
         that.setData({
-          countPlaceHolder: res.data.data
+          countPlaceHolder: parseInt(res.data.data.all_cash_limit.value),
+          rate: parseFloat(res.data.data.cash.value)
         })
       }
     })
@@ -133,7 +135,7 @@ Page({
       return
     }
 
-    if (this.data.cash > parseFloat(this.data.balance)) {
+    if ((this.data.cash - this.data.seriveCharge) > parseFloat(this.data.balance)) {
       wx.showToast({
         title: '提现金额不能大于账户余额',
         icon: 'none',

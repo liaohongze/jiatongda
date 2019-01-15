@@ -3,7 +3,9 @@ var path = require('../../utils/api.js');
 var util = require('../../utils/util.js');
 var wxRequest = require('../../utils/wxRequest.js')
 var WxParse = require('../../wxParse/wxParse.js');
-var { isRegister } = require('../../models/isRegister.js')
+var {
+  isRegister
+} = require('../../models/isRegister.js')
 var app = getApp()
 import config from '../../utils/config.js'
 Page({
@@ -30,12 +32,12 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.setData({
       productId: options.id, //用于从分享直接打开该页面时需要用此id来获取产品信息
       prodIsStandard: options.standard
     }, () => {
-      if(options.userid) {
+      if (options.userid) {
         this.setData({
           recommender: options.userid
         })
@@ -49,49 +51,49 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-  
+  onReady: function() {
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     this.addSeeTimes()
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-  
+  onHide: function() {
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-  
+  onUnload: function() {
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-  
+  onPullDownRefresh: function() {
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-  
+  onReachBottom: function() {
+
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
     // console.log(app.globalData.userId);
     return {
       title: '家通达，通达更美好的家！',
@@ -100,7 +102,7 @@ Page({
   },
 
   // 图片预览
-  previewImage: function (e) {
+  previewImage: function(e) {
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
       urls: e.currentTarget.dataset.urls // 需要预览的图片http链接列表
@@ -108,7 +110,7 @@ Page({
   },
 
   //添加浏览次数
-  addSeeTimes: function () {
+  addSeeTimes: function() {
     var that = this
     if (!(JSON.stringify(that.data.product) == "{}")) {
       var addSeeTimes = wxRequest.postRequest(path.addSeeTimes(), {
@@ -127,7 +129,7 @@ Page({
   },
 
   // 打电话
-  phoneCall: function () {
+  phoneCall: function() {
     const that = this
     wx.makePhoneCall({
       phoneNumber: that.data.serviceTel
@@ -135,7 +137,7 @@ Page({
   },
 
   // 添加、删除收藏
-  collection: function () {
+  collection: function() {
     if (wx.getStorageSync('token')) {
       if (!isRegister(app.globalData.isRegister, '该操作需要授权手机号！')) return
     }
@@ -168,7 +170,7 @@ Page({
   },
 
   //下单
-  formSubmit: function (e) {
+  formSubmit: function(e) {
     if (wx.getStorageSync('token')) {
       if (!isRegister(app.globalData.isRegister, '该操作需要授权手机号！')) return
     }
@@ -183,7 +185,7 @@ Page({
     })
   },
 
-  getPageData: function () {
+  getPageData: function() {
     var that = this
     var article = ''
     //搜索某服务对应的产品，搜索第一个服务对应的产品，搜索所有产品
@@ -217,7 +219,7 @@ Page({
           var evaluates = res.data.data.list
           var length = evaluates.length
           for (var i = 0; i < length; i++) {
-            evaluates[i].date = util.formatTime(evaluates[i].on_time)
+            evaluates[i].date = util.formatTime(evaluates[i].create_time)
             evaluates[i].nickname = evaluates[i].nickname[0] + '***' + evaluates[i].nickname[evaluates[i].nickname.length - 1]
             evaluates[i].star = JSON.parse(evaluates[i].star)
             if (evaluates[i].file.length) {
@@ -244,12 +246,28 @@ Page({
       }
     })
 
+    //获取推荐服务产品
+    var recommenderProd = wxRequest.postRequest(path.recommenderProd(), {
+      adcode: app.globalData.address.adcode,
+      page: 1,
+      page_size: 10
+    });
+    recommenderProd.then(res => {
+      if (res.data.status) {
+        var list = res.data.data.list
+        list.length = 3
+        that.setData({
+          recommenderProds: list
+        })
+      }
+    })
+
     that.setData({
       serviceTel: app.globalData.serviceTel
     })
   },
 
-  onLaunch: function () {
+  onLaunch: function() {
     //全局
     var that = this;
     // 获取用户信息
@@ -268,7 +286,7 @@ Page({
       }
     });
   },
-  onGotUserInfo: function (res) {
+  onGotUserInfo: function(res) {
     // 可以将 res 发送给后台解码出 unionId
     if (res.detail.userInfo) {
       this.setData({
@@ -277,12 +295,12 @@ Page({
       this.get_token();
     }
   },
-  get_token: function () {
+  get_token: function() {
     //全局
     var that = this;
     //先获取code
     wx.login({
-      success: function (res) {
+      success: function(res) {
         // console.log(res)
         if (res.code) {
           that.code = res.code;
@@ -306,7 +324,7 @@ Page({
                   'content-type': 'application/json',
                   'app-ver': config.getVersion
                 },
-                success: function (res) {
+                success: function(res) {
                   if (tokenRes.data.code !== 200) {
                     wx.showModal({
                       title: '提示',
@@ -353,11 +371,9 @@ Page({
       }
     });
   },
-  getPhoneNumber: function (e) {
+  getPhoneNumber: function(e) {
     // console.log(e)
     var that = this
-    console.log(that.data.recommender);
-    console.log(e);
     if (e.detail.encryptedData) {
       // 调用接口将encryptedData发送到后台解密出电话号码
       //搜索某服务对应的产品，搜索第一个服务对应的产品，搜索所有产品

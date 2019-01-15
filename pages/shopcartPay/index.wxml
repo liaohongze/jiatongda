@@ -1,0 +1,31 @@
+<!--pages/shopcartPay/index.wxml-->
+<view class='head'>应付金额</view>
+
+<view class='pay_count'>￥
+  <text>{{payCount}}</text>
+</view>
+
+<view class='pay_way'>
+  <view class='item'>
+    <image src='../../img/icon-balance.png' />
+    <view class='right_side'>
+      <text class='title'>余额</text>
+      <text class='had_balance'>当前余额：<text class='red'>￥{{balance}}</text></text>
+    </view>
+  </view>
+  <view class='item'>
+    <image src='../../img/icon-wechat.png' />
+    <view class='title right_side'>微信</view>
+  </view>
+</view>
+
+<view class='tip'>
+  <view>服务提示</view>
+  <view>1.师傅上门后，如因客户原因，导致订单取消，需收取上门费30元。</view>
+  <view>2.如有疑难问题需加收师傅人工费，由师傅和用户协商确定，通过支付差价功能支付给师傅。</view>
+  <view>3.现场服务过程中，严禁进行平台外交易。</view>
+</view>
+
+<form report-submit="true" bindsubmit="formSubmit">
+  <button form-type='submit' class='pay' bindtap='pay' disabled='{{isPaying}}'>立即支付</button>
+</form>

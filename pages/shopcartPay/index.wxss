@@ -1,0 +1,109 @@
+/* pages/shopcartPay/index.wxss */
+.head {
+  padding: 70rpx 0 45rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  background-color: #fff;
+}
+
+.pay_count {
+  padding-bottom: 50rpx;
+  text-align: center;
+  line-height: 45rpx;
+  font-size: 45rpx;
+  color: #ff6b4e;
+  background-color: #fff;
+}
+
+.pay_count text {
+  line-height: 83rpx;
+  font-size: 83rpx;
+  font-weight: 700;
+}
+
+.goto_coupon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100rpx;
+  padding-right: 44rpx;
+  padding-left: 44rpx;
+  font-size: 30rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #eeeeee;
+  border-radius: 0;
+}
+
+.goto_coupon .right_side {
+  display: flex;
+  align-items: center;
+}
+
+.offer_price {
+  padding: 20rpx 44rpx;
+  font-size: 26rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #eeeeee;
+}
+
+.pay_way {
+  margin-top: 20rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #eeeeee;
+  border-bottom: 1rpx solid #eeeeee;
+}
+
+.pay_way .item {
+  display: flex;
+  align-items: center;
+  padding-left: 44rpx;
+  font-size: 27rpx;
+}
+
+.pay_way .item > image {
+  width: 41rpx;
+  height: 41rpx;
+  margin-right: 25rpx;
+}
+
+.pay_way .item .right_side {
+  flex: 1;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.pay_way .item > .title {
+  padding: 35rpx 0;
+  border-color: transparent;
+}
+
+.pay_way .item .right_side > text {
+  display: block;
+}
+
+.pay_way .item .right_side .had_balance {
+  font-size: 22rpx;
+  color: #8c8c8c;
+}
+
+.pay_way .item .right_side .red {
+  color: #ff6b4e;
+}
+
+.tip {
+  padding: 34rpx 60rpx 0;
+  font-size: 26rpx;
+  color: #56617d;
+}
+
+.pay {
+  width: 642rpx;
+  height: 89rpx;
+  margin-top: 80rpx;
+  line-height: 89rpx;
+  font-size: 30rpx;
+  color: #fff;
+  background-color: #00c482;
+  border-radius: 4rpx;
+}

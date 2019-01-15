@@ -82,7 +82,7 @@ Page({
       }
     })
 
-    this.getShopCart()
+    this.cartNum()
   },
 
   /**
@@ -631,8 +631,10 @@ Page({
       remark: this.data.order.msg,
       address_id: this.data.order.endAddr.id,
       is_standard: 1,
-      make_time: this.data.order.date + ' ' + this.data.order.time,
+      date: this.data.order.date,
+      time: this.data.order.time,
       sku_id: this.data.product.sku.id,
+      lables: that.getSelectedLabel(),
       take_address_id: this.data.order.startAddr ? this.data.order.startAddr.id : null
     };
 
@@ -643,7 +645,7 @@ Page({
           title: '添加成功！',
           duration: 2000
         })
-        that.getShopCart()
+        that.cartNum()
       }
     })
   },
@@ -717,6 +719,7 @@ Page({
       take_address_info: this.data.order.startAddr ? JSON.stringify(this.data.order.startAddr) : null,
       address_info: JSON.stringify(this.data.order.endAddr),
       sku_id: this.data.product.sku.id,
+      lables: that.getSelectedLabel(),
       order_type: 0,
     };
 
@@ -731,20 +734,47 @@ Page({
     })
   },
 
-  getShopCart: function () {
+  cartNum: function () {
     var that = this
-    var cartList = wxRequest.postRequest(path.getShopCart(), {
-      page: this.data.currentPage1,
-      page_size: 10,
+    var cartNum = wxRequest.postRequest(path.cartNum(), {
       is_standard: 1
     });
 
-    cartList.then(res => {
+    cartNum.then(res => {
       if (res.data.status) {
         that.setData({
           shopCartCount: res.data.data.count
         })
       }
+    })
+  },
+
+  getSelectedLabel: function () {
+    let splList = []
+    this.data.product.lables.map(item => {
+      let hasCheck = false, child_labels = []
+      item.child_labels.map(label => {
+        if (label.checked) {
+          hasCheck = true
+          child_labels.push(label)
+        }
+      })
+
+      if (hasCheck) {
+        item.child_labels = child_labels
+        splList.push(item)
+      }
+    })
+
+    return splList
+  },
+
+  fifthTap: function ({ currentTarget: { dataset: { index, idx } } }) {
+    let product = this.data.product
+    product.lables[index].child_labels[idx].checked = !product.lables[index].child_labels[idx].checked
+
+    this.setData({
+      product
     })
   },
 })

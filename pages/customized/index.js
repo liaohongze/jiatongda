@@ -18,7 +18,8 @@ Page({
     thirdIndex: 0,
     fourthIndex: 0,
     fifthIndex: 0,
-    productId: null
+    productId: null,
+    shopCartCount: 0
   },
 
   /**
@@ -50,7 +51,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.cartNum()
   },
 
   /**
@@ -145,12 +146,92 @@ Page({
     // })
   },
 
-  gotoSimAppointment: function () {
+  fifthTap: function ({ currentTarget: { dataset: { id, index, idx } }}) {
+    let list = this.data.fourthList
+    list[index].child_labels[idx].checked = !list[index].child_labels[idx].checked
+
+    this.setData({
+      fourthList: list
+    })
+  },
+
+  verify: function ({ currentTarget: { dataset: { type } } }) {
     if (wx.getStorageSync('token')) {
       if (!isRegister(app.globalData.isRegister, '该操作需要授权手机号！')) return
     }
+
+    if (!this.data.thirdIndex) {
+      wx.showModal({
+        title: '提示',
+        content: '您还没有选择完整的条件！',
+        showCancel: false
+      })
+      return
+    }
+
+    type === 'shop' ? this.addToShopcart() : this.gotoSimAppointment()
+  },
+
+  getSelectedLabel: function () {
+    let splList = []
+    this.data.fourthList.map(item => {
+      let hasCheck = false, child_labels = []
+      item.child_labels.map(label => {
+        if (label.checked) {
+          hasCheck = true
+          child_labels.push(label)
+        }
+      })
+
+      if (hasCheck) {
+        item.child_labels = child_labels
+        splList.push(item)
+      }
+    })
+
+    return splList
+  },
+
+  addToShopcart: function () {
+    var that = this
+    var post_data = {
+      p_id: this.data.thirdList[this.data.thirdIndex - 1].p_id,
+      is_standard: 0,
+      lables: this.getSelectedLabel()
+    };
+
+    var addToShopcart = wxRequest.postRequest(path.addToShopcart(), post_data);
+    addToShopcart.then(res => {
+      if (res.data.status) {
+        wx.hideLoading()
+        wx.showToast({
+          title: '添加成功！',
+          duration: 2000
+        })
+        that.cartNum()
+      }
+    })
+  },
+
+  gotoSimAppointment: function () {
+    app.globalData.pageCustomized.fourthList = this.data.fourthList
     wx.navigateTo({
       url: '../simAppointment/index?id=' + this.data.productId
+    })
+  },
+
+  cartNum: function () {
+    var that = this
+    var cartNum = wxRequest.postRequest(path.cartNum(), {
+      is_standard: 0
+    });
+
+    cartNum.then(res => {
+      if (res.data.status) {
+        that.setData({
+          shopCartCount: res.data.data.count
+        })
+      }
     })
   },
 

@@ -16,6 +16,23 @@
   <view class='description'>{{product.introduct}}</view>
 </view>
 
+<view class='recommender_prod' wx:if='{{!product.is_standard}}'>
+  <view class='title'>
+    推荐服务
+  </view>
+
+  <view class='server_list'>
+    <navigator wx:for="{{recommenderProds}}" url='../repairDetail/index?id={{item.p_id}}&standard={{item.is_standard}}' wx:key="{{index}}">
+      <image src='{{item.icon}}'></image>
+      <text>{{item.p_name}}</text>
+      <view class='price'>
+        <text>￥{{item.product_price || 0}}</text>
+        <text>起</text>
+      </view>
+    </navigator>
+  </view>
+</view>
+
 <view class='evaluate' wx:if="{{evaluates.length}}">
   <view class='title'>服务评价</view>
 

@@ -23,17 +23,31 @@
 <view class='fourth_step' wx:if="{{thirdIndex}}">
   <text class='title'>其他</text>
   <view class='list fourth_list' wx:for="{{fourthList}}" wx:key="{{index}}">
-    <text class='{{fourthIndex === (index + 1) ? "active" : ""}}' data-i='{{index + 1}}' id='{{item.spl_id}}'>{{item.name}}</text>
+    <text>{{item.name}}</text>
     <view class='list'>
-      <text wx:for="{{item.child_labels}}" wx:for-index='idx' wx:for-item='label' wx:key="{{idx}}" class='{{fifthIndex === (idx + 1) ? "active" : ""}}' data-i='{{idx + 1}}' id='{{label.spl_id}}'>{{label.name}}</text>
+      <text wx:for="{{item.child_labels}}" wx:for-index='idx' wx:for-item='label' wx:key="{{idx}}" class='{{label.checked ? "active" : ""}}' data-index='{{index}}' data-idx='{{idx}}' data-id='{{label.spl_id}}' bindtap='fifthTap'>{{label.name}}</text>
     </view>
   </view>
 </view>
 
-<form report-submit="true" bindsubmit="formSubmit">
+<!-- <form report-submit="true" bindsubmit="formSubmit">
   <button form-type='submit' catchtap='gotoSimAppointment' wx:if="{{thirdIndex}}">我要下单</button>
-</form>
+</form> -->
 
 <view class='tip'>“师傅报价”模式是根据您发布的订单服务内容推送给拥有该类专业技能的师傅，由专业师傅对您的订单进行评估报价，系统将给您推荐服务最好、价格最优的师傅报价。</view>
 
 <view class='foot_space'></view>
+
+<view class='footer'>
+  <navigator url='/pages/shopCart/index?tab=2'>
+    <text>{{shopCartCount}}</text>
+    <image src='/img/shopcar.png'></image>
+    <view>购物车</view>
+  </navigator>
+  <form report-submit="true" bindsubmit="formSubmit">
+    <button class='add_shopcart' catchtap='verify' data-type='shop' form-type='submit'>加入购物车</button>
+  </form>
+  <form report-submit="true" bindsubmit="formSubmit">
+    <button class='submit' catchtap='verify' data-type='submit' form-type='submit'>立即下单</button>
+  </form>
+</view>

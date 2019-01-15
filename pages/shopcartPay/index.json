@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "支付",
+  "usingComponents": {
+    "i-icon": "../../extend/iview/icon/index"
+  }
+}

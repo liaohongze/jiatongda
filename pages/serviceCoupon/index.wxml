@@ -1,5 +1,5 @@
 <!--pages/serviceCoupon/index.wxml-->
-<view class='coupon' wx:for="{{canUse}}" wx:key="{{index}}" style='background: url(https://www.jiatd.com/uploads/comment/20180903/coupon.png) center center no-repeat;background-size: 100% 100%;' catchtap='selectCoupon' id='{{item.record_id}}' data-price='{{item.prices}}' data-code='{{item.coupon_code}}'>
+<view class='coupon' wx:for="{{canUse}}" wx:key="{{index}}" style='background: url(https://www.jiatd.com/uploads/comment/20180903/coupon.png) center center no-repeat;background-size: 100% 100%;' catchtap='selectCoupon' id='{{item.record_id}}' data-price='{{item.prices}}' data-code='{{item.coupon_code}}' data-couponid='{{item.coupon_id}}'>
   <view class='title_price'>
     <text class='title'>{{item.coupon_name}}</text>
     <view class='price'>

@@ -323,3 +323,7 @@
   height: 37rpx;
   margin-right: 10rpx;
 }
+
+.progress_no_quoted {
+  margin-top: 21rpx;
+}

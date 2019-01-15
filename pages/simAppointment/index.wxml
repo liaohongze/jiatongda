@@ -15,6 +15,11 @@
   </view>
 </navigator>
 
+<view class='expected'>
+  <view>期望报价</view>
+  <input type='digit' value='{{expected}}' bindinput='expectedChange'></input>
+</view>
+
 <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange">
   <view class='date'>
     <view class='left_side'>
@@ -44,6 +49,15 @@
 <i-panel title="需求文字描述(非必填)">
   <textarea placeholder='请描述您的安装/维修环境（是否有电梯等），包括是否需要携带梯子、配件或特殊工具。如果您是商家（电商或实体店），请将用户的安装地址、手机号、联系人填写准确（前面定位的地址为取货地址-如需要师傅取货）。' value='{{order.msg}}' bindinput='textareaInput'></textarea>
 </i-panel>
+
+<view class='labels' wx:if='{{product.lables.length}}'>
+  <view class='fourth_list' wx:for='{{product.lables}}' wx:key='{{index}}'>
+    <text class='title'>{{item.name}}</text>
+    <view class='fifth_list' wx:for='{{item.child_labels}}' wx:for-item='label' wx:for-index='idx' wx:key='{{idx}}'>
+      <text class='{{label.checked ? "active" : ""}}' bindtap='fifthTap' data-index='{{index}}' data-idx='{{idx}}'>{{label.name}}</text>
+    </view>
+  </view>
+</view>
 
 <view class="page__bd product_uploader">
   <view class="weui-cells">
@@ -81,15 +95,15 @@
 <view class='foot_space'></view>
 
 <view class='footer'>
-  <navigator url='/pages/shopCart/index'>
+  <navigator url='/pages/shopCart/index?tab=2'>
     <text>{{shopCartCount}}</text>
     <image src='/img/shopcar.png'></image>
     <view>购物车</view>
   </navigator>
   <form report-submit="true" bindsubmit="formSubmit">
-    <button class='add_shopcart' catchtap='addToShopCart' form-type='submit'>加入购物车</button>
+    <button class='add_shopcart' catchtap='verify' data-type='shop' form-type='submit'>加入购物车</button>
   </form>
   <form report-submit="true" bindsubmit="formSubmit">
-    <button class='submit' catchtap='verify' form-type='submit'>立即下单</button>
+    <button class='submit' catchtap='verify' data-type='submit' form-type='submit'>立即下单</button>
   </form>
 </view>

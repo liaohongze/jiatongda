@@ -181,9 +181,9 @@ Page({
       } else if (this.data.fromPage == 'simAppoint') {
         app.globalData.pageSimAppoint.address = obj
       } else if (this.data.fromPage == 'shopCart') {
-        app.globalData.pageShopCart.idx = this.data.idx
-        app.globalData.pageShopCart.addrtype = this.data.addrtype
-        app.globalData.pageShopCart[this.data.addrtype] = obj
+        app.globalData.pageShopCart.address.idx = this.data.idx
+        app.globalData.pageShopCart.address.addrtype = this.data.addrtype
+        app.globalData.pageShopCart.address.addr = obj
       }
       wx.navigateBack()
     } else {

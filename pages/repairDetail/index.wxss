@@ -44,6 +44,69 @@
   border-top: 1rpx solid #f0f0f0;
 }
 
+/* 推荐服务 */
+.recommender_prod {
+  margin-bottom: 21rpx;
+}
+
+.recommender_prod .title {
+  position: relative;
+  padding: 30rpx 0;
+  font-size: 30rpx;
+  font-weight: 700;
+  text-align: center;
+  background-color: #fff;
+}
+.recommender_prod .title::before,
+.recommender_prod .title::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 32%;
+  height: 1rpx;
+  background-color: #dbdbdb;
+  transform: translateY(-50%);
+}
+.recommender_prod .title::before {
+  left: 33rpx;
+}
+.recommender_prod .title::after {
+  right: 33rpx;
+}
+
+.recommender_prod .server_list {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 34rpx 40rpx;
+  font-size: 28rpx;
+  background-color: #fff;
+}
+
+.recommender_prod .server_list navigator {
+  display: block;
+  width: 222rpx;
+  text-align: center;
+}
+
+.recommender_prod .server_list navigator image {
+  display: block;
+  width: 100%;
+  height: 182rpx;
+  margin-bottom: 10rpx;
+  border: 1rpx solid #EFEFEF;
+}
+
+.recommender_prod .server_list navigator .price {
+  font-size: 31rpx;
+  color: #FA5741;
+}
+
+.recommender_prod .server_list navigator .price text:last-of-type {
+  font-size: 22rpx;
+}
+
 /* 服务评价 */
 .evaluate {
   padding: 35rpx 0 0 33rpx;

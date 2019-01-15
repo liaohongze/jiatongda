@@ -66,6 +66,22 @@
   transform: translateY(-50%);
 }
 
+.sku .sku_title {
+  display: flex;
+  align-items: center;
+  padding-right: 30rpx;
+  margin-bottom: 15rpx;
+}
+
+.sku .sku_title .title {
+  flex: 1;
+  padding-right: 20rpx;
+}
+
+.sku .sku_title .delete {
+  color: #FF725C;
+}
+
 /* .order .time {
   position: relative;
   display: flex;
@@ -85,6 +101,20 @@
   background-color: #F4F4F4;
   content: '';
 } */
+
+.number_n_delete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 50rpx 0 80rpx;
+  margin-top: 20rpx;
+  margin-bottom: 30rpx;
+  font-size: 30rpx;
+}
+
+.number_n_delete .delete {
+  color: #FF725C;
+}
 
 .coupon {
   position: relative;

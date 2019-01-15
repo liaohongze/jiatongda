@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/shopCart/index",
     "pages/index/index",
+    "pages/shopCart/index",
     "pages/appointment/index",
     "pages/recommender/index",
     "pages/withdraw/index",
@@ -34,7 +34,8 @@
     "pages/single/index",
     "pages/search/index",
     "pages/simAppointment/index",
-    "pages/login/index"
+    "pages/login/index",
+    "pages/shopcartPay/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#00c482",

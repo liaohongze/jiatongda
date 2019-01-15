@@ -124,7 +124,8 @@ Page({
       }
     } else if (this.data.fromPage === 'shopCart') {
       app.globalData.pageShopCart.coupon = {
-        code: e.currentTarget.code,
+        coupon_code: e.currentTarget.dataset.code,
+        coupon_id: e.currentTarget.dataset.couponid,
         prices: e.currentTarget.dataset.price,
         index: this.data.shopCartIndex
       }
