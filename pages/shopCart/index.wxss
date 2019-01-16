@@ -102,18 +102,34 @@
   content: '';
 } */
 
-.number_n_delete {
+.product2 .prod_name {
+  position: relative;
+  padding-right: 127rpx;
+}
+
+.product2 .delete {
+  position: absolute;
+  top: 50%;
+  right: 30rpx;
+  color: #FF725C;
+  transform: translateY(-50%);
+}
+
+.expect_n_number {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 50rpx 0 80rpx;
+  padding: 0 0 0 80rpx;
   margin-top: 20rpx;
   margin-bottom: 30rpx;
   font-size: 30rpx;
 }
 
-.number_n_delete .delete {
-  color: #FF725C;
+.expect_n_number .expect {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
 }
 
 .coupon {

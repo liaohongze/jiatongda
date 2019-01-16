@@ -112,14 +112,18 @@
           <view class='prod_name'>
             <checkbox value='{{index + "," + prodIndex}}' checked="{{prod.checked}}" data-index='{{index}}' data-prodindex='{{prodIndex}}' bindtap='prodTap2' />
             <text>{{prod.p_name}}</text>
+            <text class='delete' data-pid='{{prod.p_id}}' data-index='{{index}}' data-prodindex='{{prodIndex}}' catchtap='deleteProd'>删除</text>
           </view>
-          <view class='number_n_delete'>
+          <view class='expect_n_number'>
+            <view class='expect'>
+              <text>期望报价：</text>
+              <input type='digit' value='{{prod.expected_quotation}}' bindinput='expectedChange' data-index='{{index}}' data-prodindex='{{prodIndex}}'></input>
+            </view>
             <view class='input_number'>
               <button class='reduce' catchtap='reduce' data-index='{{index}}' data-prodindex='{{prodIndex}}'>-</button>
               <input type='number' value='{{ prod.num }}' bindinput='numChange' data-index='{{index}}' data-prodindex='{{prodIndex}}'></input>
               <button class='plus' catchtap='plus' data-index='{{index}}' data-prodindex='{{prodIndex}}'>+</button>
             </view>
-            <text class='delete' data-pid='{{prod.p_id}}' data-index='{{index}}' data-prodindex='{{prodIndex}}' catchtap='deleteProd'>删除</text>
           </view>
         </view>
       </checkbox-group>

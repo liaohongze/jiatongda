@@ -197,7 +197,7 @@ Page({
     var post_data = {
       p_id: this.data.thirdList[this.data.thirdIndex - 1].p_id,
       is_standard: 0,
-      lables: this.getSelectedLabel()
+      labels: JSON.stringify(this.getSelectedLabel())
     };
 
     var addToShopcart = wxRequest.postRequest(path.addToShopcart(), post_data);

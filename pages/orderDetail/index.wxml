@@ -13,13 +13,13 @@
     <text class='type'>服务类型：</text>
     <text>{{order.service_type || ''}}</text>
   </view>
-  <view class='info_item' wx:if="{{order.is_standard}}">
+  <!-- <view class='info_item' wx:if="{{order.is_standard}}">
     <text class='type'>产品类型：</text>
     <text>{{order.product_type || ''}}</text>
-  </view>
-  <view class='info_item' wx:if="{{order.is_standard}}">
-    <text class='type'>产品规格：</text>
-    <text>{{order.product_guige || ''}}</text>
+  </view> -->
+  <view class='info_item' wx:if="{{!order.is_standard}}">
+    <text class='type'>期望报价：</text>
+    <text>{{order.expected_quotation || ''}}</text>
   </view>
   <view class='info_item'>
     <text class='type'>服务时间：</text>

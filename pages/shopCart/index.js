@@ -491,6 +491,8 @@ Page({
       is_standard: type
     });
 
+    let that = this
+
     if (submitShopcart.data.status) {
       wx.showModal({
         title: '提示',
@@ -500,7 +502,7 @@ Page({
           if (res.confirm) {
             if (submitShopcart.data.data.order_all_sn) {
               wx.redirectTo({
-                url: '/pages/shopcartPay/index?sn=' + submitShopcart.data.data.order_all_sn + '&total=' + this.getFinalTotal()
+                url: '/pages/shopcartPay/index?sn=' + submitShopcart.data.data.order_all_sn + '&total=' + that.getFinalTotal()
               })
             } else {
               wx.reLaunch({
@@ -588,6 +590,16 @@ Page({
       ['list' + this.data.current]: list
     }, () => {
       if (value > 0 && this.data.current === '1') this.getFinalTotal()
+    })
+  },
+
+  // 期望报价
+  expectedChange: function ({ currentTarget: { dataset: { index, prodindex } }, detail: { value } }) {
+    let list2 = this.data.list2
+    list2[index].product_list[prodindex].expected_quotation = value
+
+    this.setData({
+      list2
     })
   },
 
@@ -744,7 +756,11 @@ Page({
           verify = false
           return false
         }
+        item.is_standard = 1
+        item.username = item.address_info.username
+        item.mobile = item.address_info.mobile
       })
+
       return verify ? newList : false
     } else {
       return []
@@ -758,15 +774,18 @@ Page({
     list.map(cate => {
       let hasProdCheck = false
       let newProdList = []
+      let expected_quotation = 0
       cate.product_list.map(prod => {
         if (prod.checked) {
           hasProdCheck = true
+          expected_quotation += prod.expected_quotation
           newProdList.push(prod)
         }
       })
 
       if (hasProdCheck) {
         cate.product_list = newProdList
+        cate.expected_quotation = expected_quotation
         hasCateCheck = true
         newList.push(cate)
       }
@@ -802,6 +821,10 @@ Page({
           verify = false
           return false
         }
+
+        item.is_standard = 0
+        item.username = item.address_info.username
+        item.mobile = item.address_info.mobile
       })
       return verify ? newList : false
     } else {

@@ -40,7 +40,15 @@ Page({
   onShow: function() {
     if (wx.getStorageSync('token')) {
       if (this.data.city !== app.globalData.address.selectCity) {
-        this.getCouponList()
+        this.setData({
+          isLoading: true,
+          currentPage: 1,
+          totalPage: 1,
+          showNoMore: false,
+          couponList: []
+        }, () => {
+          this.getCouponList()
+        })
       }
       this.setData({
         city: app.globalData.address.selectCity == '' ? app.globalData.address.city : app.globalData.address.selectCity,

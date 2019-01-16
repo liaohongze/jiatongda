@@ -94,7 +94,46 @@ textarea {
 }
 
 /* 四、五级 */
-.labels {
+.fourth_box {
+  padding: 30rpx 0;
+  font-size:30rpx;
+}
+
+.fourth_list {
+  padding-right: 30rpx;
+  margin-bottom: 21rpx;
+  margin-left: 40rpx;
+  border-bottom: 1rpx solid #ddd;
+}
+
+.fourth_list:last-of-type {
+  border-color: transparent;
+}
+
+.fourth_list > text {
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.fourth_list .list text {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 55rpx;
+  padding: 0 20rpx;
+  margin-right: 24rpx;
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  color: #8e8e8e;
+  line-height: 50rpx;
+  border: 1rpx solid #8e8e8e;
+  border-radius: 8rpx;
+}
+
+.fourth_list .list .active {
+  color: #44d4a3;
+  border-color: #44d4a3;
+}
+/* .labels {
   padding:36rpx;
   margin-top: 21rpx;
   font-size: 30rpx;
@@ -133,7 +172,7 @@ textarea {
 .labels .fifth_list > .active {
   color: #fff;
   background-color: #00C482;
-}
+} */
 
 /* 协议 */
 .agreement {

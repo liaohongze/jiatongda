@@ -50,14 +50,16 @@
   <textarea placeholder='请描述您的安装/维修环境（是否有电梯等），包括是否需要携带梯子、配件或特殊工具。如果您是商家（电商或实体店），请将用户的安装地址、手机号、联系人填写准确（前面定位的地址为取货地址-如需要师傅取货）。' value='{{order.msg}}' bindinput='textareaInput'></textarea>
 </i-panel>
 
-<view class='labels' wx:if='{{product.lables.length}}'>
-  <view class='fourth_list' wx:for='{{product.lables}}' wx:key='{{index}}'>
-    <text class='title'>{{item.name}}</text>
-    <view class='fifth_list' wx:for='{{item.child_labels}}' wx:for-item='label' wx:for-index='idx' wx:key='{{idx}}'>
-      <text class='{{label.checked ? "active" : ""}}' bindtap='fifthTap' data-index='{{index}}' data-idx='{{idx}}'>{{label.name}}</text>
+<i-panel title="其他" wx:if='{{product.labels.length}}'>
+  <view class='fourth_box'>
+    <view class='fourth_list' wx:for="{{product.labels}}" wx:key="{{index}}">
+      <text>{{item.name}}</text>
+      <view class='list'>
+        <text wx:for="{{item.child_labels}}" wx:for-index='idx' wx:for-item='label' wx:key="{{idx}}" class='{{label.checked ? "active" : ""}}' data-index='{{index}}' data-idx='{{idx}}' data-id='{{label.spl_id}}' bindtap='fifthTap'>{{label.name}}</text>
+      </view>
     </view>
   </view>
-</view>
+</i-panel>
 
 <view class="page__bd product_uploader">
   <view class="weui-cells">

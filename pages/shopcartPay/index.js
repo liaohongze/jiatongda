@@ -88,6 +88,8 @@ Page({
       order_all_sn: this.data.orderAllSn
     });
 
+    let that = this
+
     if (payRes.data.status == 1) {
       wx.showModal({
         title: '提示',
@@ -105,10 +107,10 @@ Page({
     } else if (payRes.data.status == -1) {
       wx.showModal({
         title: '提示',
-        content: res.data.message,
+        content: payRes.data.message,
         success: function (res) {
           if (res.confirm) {
-            this.recharge(payRes.data.data.need_pay)
+            that.recharge(payRes.data.data.need_pay)
           }
         }
       })

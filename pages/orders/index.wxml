@@ -9,7 +9,7 @@
 <view class='tab_container' wx:if="{{current == 'tab1'}}">
   <navigator class='order' url='/pages/orderDetail/index?order_id={{item.order_id}}' wx:for="{{task}}" wx:key="{{index}}">
     <view class='title_status'>
-      <text class='title'>{{item.obj_name}}</text>
+      <text class='title'>{{item.title}}</text>
       <text class="{{item.status == 1 ? 'status' : 'status offered'}}">{{status[item.status]}}</text>
     </view>
     <text class='time'>服务时间: {{item.make_time}}</text>
@@ -24,7 +24,7 @@
 <view class='tab_container' wx:elif="{{current == 'tab2'}}">
   <navigator class='order' url='/pages/orderDetail/index?order_id={{item.order_id}}&tab=excuting' wx:for="{{excuting}}" wx:key="{{index}}">
     <view class='title_status'>
-      <text class='title'>{{item.obj_name}}</text>
+      <text class='title'>{{item.title}}</text>
       <text class="status offered">{{status[item.status]}}</text>
     </view>
     <text class='time'>服务时间: {{item.make_time}}</text>
@@ -35,7 +35,7 @@
 <view class='tab_container' wx:elif="{{current == 'tab3'}}">
   <navigator class='order' url='/pages/orderDetail/index?order_id={{item.order_id}}&tab=completed' wx:for="{{completed}}" wx:key="{{index}}">
     <view class='title_status'>
-      <text class='title'>{{item.obj_name}}</text>
+      <text class='title'>{{item.title}}</text>
       <text class="status offered">{{status[item.status]}}</text>
     </view>
     <text class='time'>服务时间: {{item.make_time}}</text>
@@ -46,7 +46,7 @@
 <view class='tab_container' wx:elif="{{current == 'tab5'}}">
   <navigator class='order' url='/pages/orderDetail/index?order_id={{item.order_id}}&tab=cancel' wx:for="{{cancel}}" wx:key="{{index}}">
     <view class='title_status'>
-      <text class='title'>{{item.obj_name}}</text>
+      <text class='title'>{{item.title}}</text>
       <text class="status offered">{{status[item.status]}}</text>
     </view>
     <text class='time'>服务时间: {{item.make_time}}</text>
@@ -58,7 +58,7 @@
 <view class='tab_container' wx:else="{{current == 'tab4'}}">
   <navigator class='order' url='/pages/orderDetail/index?order_id={{item.order_id}}&tab=all' wx:for="{{allOrder}}" wx:key="{{index}}">
     <view class='title_status'>
-      <text class='title'>{{item.obj_name}}</text>
+      <text class='title'>{{item.title}}</text>
       <text class="{{item.status == 0 ? 'status' : 'status offered'}}">{{status[item.status]}}</text>
     </view>
     <text class='time'>服务时间: {{item.make_time}}</text>

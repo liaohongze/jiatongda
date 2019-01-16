@@ -111,7 +111,7 @@ Page({
 
   expectedChange: function (e) {
     this.setData({
-      expected: e.detail.value
+      expected: parseFloat(e.detail.value)
     })
   },
 
@@ -128,7 +128,7 @@ Page({
         }, () => {
           if (app.globalData.pageCustomized.fourthList.length) {
             let product = this.data.product
-            product.lables = app.globalData.pageCustomized.fourthList
+            product.labels = app.globalData.pageCustomized.fourthList
             this.setData({
               product
             })
@@ -371,7 +371,7 @@ Page({
       is_standard: 0,
       date: this.data.order.date,
       time: this.data.order.time,
-      lables: that.getSelectedLabel(),
+      labels: JSON.stringify(that.getSelectedLabel()),
       take_address_id: this.data.order.startAddr ? this.data.order.startAddr.id : null,
       file_name: fileNames.substring(0, fileNames.length - 1)
     };
@@ -402,7 +402,7 @@ Page({
       address_info: JSON.stringify(that.data.order.address),
       order_type: 1,
       expected_quotation: that.data.expected,
-      lables: that.getSelectedLabel(),
+      labels: JSON.stringify(that.getSelectedLabel()),
       file_name: fileNames.substring(0, fileNames.length - 1)
     });
     submitOrder.then(result => {
@@ -438,7 +438,7 @@ Page({
 
   fifthTap: function ({ currentTarget: { dataset: { index, idx } } }) {
     let product = this.data.product
-    product.lables[index].child_labels[idx].checked = !product.lables[index].child_labels[idx].checked
+    product.labels[index].child_labels[idx].checked = !product.labels[index].child_labels[idx].checked
 
     this.setData({
       product
@@ -447,7 +447,7 @@ Page({
 
   getSelectedLabel: function () {
     let splList = []
-    this.data.product.lables.map(item => {
+    this.data.product.labels.map(item => {
       let hasCheck = false, child_labels = []
       item.child_labels.map(label => {
         if (label.checked) {

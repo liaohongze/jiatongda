@@ -634,7 +634,7 @@ Page({
       date: this.data.order.date,
       time: this.data.order.time,
       sku_id: this.data.product.sku.id,
-      lables: that.getSelectedLabel(),
+      labels: JSON.stringify(that.getSelectedLabel()),
       take_address_id: this.data.order.startAddr ? this.data.order.startAddr.id : null
     };
 
@@ -719,7 +719,7 @@ Page({
       take_address_info: this.data.order.startAddr ? JSON.stringify(this.data.order.startAddr) : null,
       address_info: JSON.stringify(this.data.order.endAddr),
       sku_id: this.data.product.sku.id,
-      lables: that.getSelectedLabel(),
+      labels: JSON.stringify(that.getSelectedLabel()),
       order_type: 0,
     };
 
@@ -751,7 +751,7 @@ Page({
 
   getSelectedLabel: function () {
     let splList = []
-    this.data.product.lables.map(item => {
+    this.data.product.labels.map(item => {
       let hasCheck = false, child_labels = []
       item.child_labels.map(label => {
         if (label.checked) {
@@ -769,12 +769,12 @@ Page({
     return splList
   },
 
-  fifthTap: function ({ currentTarget: { dataset: { index, idx } } }) {
+  fifthTap: function ({ currentTarget: { dataset: { id, index, idx } } }) {
     let product = this.data.product
-    product.lables[index].child_labels[idx].checked = !product.lables[index].child_labels[idx].checked
+    product.labels[index].child_labels[idx].checked = !product.labels[index].child_labels[idx].checked
 
     this.setData({
       product
     })
-  },
+  }
 })

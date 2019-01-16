@@ -251,7 +251,6 @@ Page({
   // 点击选择城市
   bindCity: function (e) {
     var selectCity = e.currentTarget.dataset;
-    console.log(selectCity)
     app.globalData.address.selectCity = selectCity.city
     app.globalData.address.selectAdcode = selectCity.adcode
     this.setData({ selectCity: selectCity }, () => { wx.navigateBack() })
