@@ -30,7 +30,11 @@
   border-color: transparent;
 }
 
-.list text {
+.four_title > text {
+  font-size: 30rpx;
+}
+
+.list > text {
   box-sizing: border-box;
   display: inline-block;
   height: 55rpx;
@@ -124,6 +128,7 @@
 .add_shopcart, .submit {
   width: 200rpx;
   height: 118rpx;
+  padding: 0;
   font-size: 29rpx;
   line-height: 118rpx;
   border-radius: 0;

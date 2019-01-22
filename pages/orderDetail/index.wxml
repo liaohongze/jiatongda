@@ -1,4 +1,20 @@
 <!--pages/orderDetail/index.wxml-->
+<view class='progress_no_quoted' wx:if="{{!order.is_standard && order.status != 9}}">
+  <image class='no_quoted' src='/img/no-quoted1.png' wx:if="{{order.status == 1}}" />
+  <image class='no_quoted' src='/img/no-quoted2.png' wx:if="{{order.status == 2}}" />
+  <image class='no_quoted' src='/img/quoted3.png' wx:if="{{order.status == 3}}" />
+  <image class='no_quoted' src='/img/quoted4.png' wx:if="{{order.status == 4 || order.status == 5 || order.status == 6 || order.status == 10}}" />
+  <image class='no_quoted' src='/img/quoted5.png' wx:if="{{order.status == 7 || order.status == 8}}" />
+</view>
+
+<view class='progress_no_quoted' wx:if="{{order.is_standard && order.status != 9}}">
+  <image class='no_quoted' src='/img/quoted1.png' wx:if="{{order.status == 0}}" />
+  <image class='no_quoted' src='/img/quoted2.png' wx:if="{{order.status == 3}}" />
+  <image class='no_quoted' src='/img/quoted3.png' wx:if="{{order.status == 4 || order.status == 10}}" />
+  <image class='no_quoted' src='/img/quoted4.png' wx:if="{{order.status == 5 || order.status == 6}}" />
+  <image class='no_quoted' src='/img/quoted5.png' wx:if="{{order.status == 7 || order.status == 8}}" />
+</view>
+
 <view class='info'>
   <view class='header'>
     <text>订单号：{{order.order_sn}}</text>
@@ -11,15 +27,18 @@
   </view>
   <view class='info_item'>
     <text class='type'>服务类型：</text>
-    <text>{{order.service_type || ''}}</text>
+    <view class='service_type'>
+      <text>{{order.service_type.c_name || ''}}</text>
+      <text wx:for='{{order.service_type.array}}' wx:key='{{index}}'>{{item.str}}</text>
+    </view>
   </view>
   <!-- <view class='info_item' wx:if="{{order.is_standard}}">
     <text class='type'>产品类型：</text>
     <text>{{order.product_type || ''}}</text>
   </view> -->
-  <view class='info_item' wx:if="{{!order.is_standard}}">
+  <view class='info_item' wx:if="{{!order.is_standard && order.expected_quotation > 0}}">
     <text class='type'>期望报价：</text>
-    <text>{{order.expected_quotation || ''}}</text>
+    <text>{{order.expected_quotation}}</text>
   </view>
   <view class='info_item'>
     <text class='type'>服务时间：</text>
@@ -33,9 +52,9 @@
     <text class='type'>联系电话：</text>
     <text>{{order.mobile}}</text>
   </view> -->
-  <view class='info_item' wx:if="{{order.is_standard && order.take_address_info}}">
+  <view class='info_item' wx:if="{{order.is_standard && order.take_address_info.name}}">
     <text class='type'>配送取货地址：</text>
-    <text>{{order.take_address_info.address}}</text>
+    <text>{{order.take_address_info.take_address}}</text>
   </view>
   <view class='info_item'>
     <text class='type'>上门服务地址：</text>
@@ -47,10 +66,15 @@
   </view>
 </view>
 
-<!-- <view class='price' wx:if="{{order.status == 2}}">
-  <text class='type'>报价金额</text>
-  <text>￥{{order.min_offer || 0}}</text>
-</view> -->
+<view class='labels_box' wx:if="{{order.labels[0].length}}">
+  <view class='title'>其它：</view>
+  <view class='prod_labels' wx:for='{{order.labels}}' wx:key='{{index}}'>
+    <view class='labels' wx:for='{{item}}' wx:for-item='label' wx:for-index='labelidx' wx:key='{{labelidx}}'>
+      <text>{{label.name}}：</text>
+      <text wx:for='{{label.child_labels}}' wx:for-item='childLabel' wx:for-index='idx' wx:key='{{idx}}'>{{label.child_labels.length === (idx + 1) ?  childLabel.name : childLabel.name + "，"}}</text>
+    </view>
+  </view>
+</view>
 
 <!-- <view class="page__bd order_detail_uploader" wx:if="{{order.status == 1 || order.status == 2}}">
   <view class="weui-cells">
@@ -80,24 +104,8 @@
   </view>
 </view> -->
 
-<view class='imgs_box' wx:if="{{order.status == 1 || order.status == 2}}">
+<view class='imgs_box' wx:if="{{(order.status == 1 || order.status == 2) && order.service_img}}">
   <image wx:for="{{order.service_img}}" wx:key='{{index}}' src="{{item}}" bindtap="previewImage" id="{{item}}" data-urls='{{item}}'></image>
-</view>
-
-<view class='progress_no_quoted' wx:if="{{!order.is_standard}}">
-  <image class='no_quoted' src='/img/no-quoted1.png' wx:if="{{order.status == 1}}" />
-  <image class='no_quoted' src='/img/no-quoted2.png' wx:if="{{order.status == 2}}" />
-  <image class='no_quoted' src='/img/no-quoted3.png' wx:if="{{order.status == 5}}" />
-  <image class='no_quoted' src='/img/no-quoted4.png' wx:if="{{order.status == 6}}" />
-  <image class='no_quoted' src='/img/no-quoted5.png' wx:if="{{order.status == 8}}" />
-</view>
-
-<view class='progress_no_quoted' wx:else>
-  <image class='no_quoted' src='/img/quoted1.png'/>
-  <image class='no_quoted' src='/img/quoted2.png' wx:if="{{order.status == 2}}" />
-  <image class='no_quoted' src='/img/quoted3.png' wx:if="{{order.status == 4}}" />
-  <image class='no_quoted' src='/img/quoted4.png' wx:if="{{order.status == 5}}" />
-  <image class='no_quoted' src='/img/quoted5.png' wx:if="{{order.status == 8}}" />
 </view>
 
 <view class='detail' wx:if="{{order.status != 1 && order.status != 2}}">
@@ -109,21 +117,49 @@
     <text class='type'>服务价格</text>
     <text>￥{{order.amount}}</text>
   </view>
-  <view class='detail_item'>
+  <view class='detail_item' wx:if='{{order.status != 9}}'>
     <text class='type'>优惠券</text>
     <text>￥{{order.coupon_code!=null&&order.coupon_code!=0 ? order.coupon_info.prices : 0}}</text>
   </view>
-  <view class='detail_item'>
+  <view class='detail_item' wx:if='{{order.status != 9}}'>
     <text class='type'>已付金额</text>
     <text>￥{{order.total || 0}}</text>
   </view>
-  <view class='detail_item' wx:if="{{order.is_thank_fee}}">
+  <view class='detail_item' wx:if="{{order.is_thank_fee && order.status != 9}}">
     <text class='type'>感谢费</text>
     <text>￥{{order.thank_fee}}</text>
   </view>
-  <view class='detail_item' wx:if="{{order.is_price_diff}}">
+  <view class='detail_item' wx:if="{{order.is_price_diff && order.status != 9}}">
     <text class='type'>补差价</text>
     <text>￥{{order.price_diff}}</text>
+  </view>
+  <view class='detail_item' wx:if="{{order.status == 9}}">
+    <text class='type'>上门费</text>
+    <text>￥{{order.end_door_fee ? order.end_door_fee : order.door_fee}}</text>
+  </view>
+</view>
+
+<view class='hire_master_wrap'>
+  <view class='hire_master' wx:if='{{order.status >= 3 && order.master_info.master_id && order.status != 9}}'>
+    <image class='master_avatar' src='{{order.master_info.avatar}}' wx:if='{{order.master_info.avatar}}'></image>
+    <image class='master_avatar' src='/img/master-avatar.png' wx:else></image>
+    <view class='master_info'>
+      {{order.master_info.username}}
+      <image wx:if='{{order.master_info.types == 1}}' class='certificate_icon' src='../../img/certificate-icon.png'></image>
+      <image wx:else class='certificate_icon' src='../../img/certificate2-icon.png'></image>
+      <text class='star'>{{order.master_info.eval_score}}星级</text>
+    </view>
+    <text class='phonecall' bindtap='callMaster' data-mobile='{{order.master_info.mobile}}' wx:if='{{order.status == 4 || order.status == 5 || order.status == 10}}'>拨打电话</text>
+  </view>
+  <view class='service_n_notice'>
+    <view class='provide_service'>
+      <view class='item' wx:for='{{order.quotation}}' wx:key='{{index}}'>
+        <image src='../../img/hadService.png'></image>
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+    <view class='notice_title' wx:if='{{order.master_remarks}}'>师傅留言</view>
+    <view class='content' wx:if='{{order.master_remarks}}'>{{order.master_remarks}}</view>
   </view>
 </view>
 
@@ -159,6 +195,10 @@
 </form> -->
 
 <form report-submit="true" bindsubmit="formSubmit">
+  <button form-type='submit' class='sure' wx:if='{{order.status == 10 }}' bindtap='confirmIndoor'>师傅上门确认</button>
+</form>
+
+<form report-submit="true" bindsubmit="formSubmit">
   <button form-type='submit' class='sure' wx:if='{{order.status == 5 && order.price_diff > 0 && !order.is_diff }}' bindtap='showpayDiff'>支付差价</button>
 </form>
 
@@ -175,7 +215,11 @@
 </form>
 
 <form report-submit="true" bindsubmit="formSubmit">
-  <button form-type='submit' class='cancel' bindtap='cancelOrder' wx:if="{{order.status == 0 || order.status == 1 || order.status == 2 || order.status == 3 || order.status == 4 || order.status == 5}}" disabled="{{disableCancleBtn}}">取消订单</button>
+  <button form-type='submit' class='cancel' bindtap='cancelOrder' wx:if="{{order.status == 0 || order.status == 1 || order.status == 2 || order.status == 3 || order.status == 4 || order.status == 5 || order.status == 10}}" disabled="{{disableCancleBtn}}">取消订单</button>
+</form>
+
+<form report-submit="true" bindsubmit="formSubmit">
+  <button form-type='submit' class='sure' wx:if="{{order.status == 9}}" bindtap='retakeOrder'>重新下单</button>
 </form>
 
 <view class='master_list' wx:if="{{masterList.order_offer_record.length && order.status == 2}}">
@@ -186,7 +230,8 @@
       <view class='master_info'>
         <view class='name'>
           {{item.username}}
-          <image wx:if="{{item.auth_status == 1}}" class='certificate_icon' src='../../img/certificate-icon.png'></image>
+          <image wx:if="{{item.types == 1}}" class='certificate_icon' src='../../img/certificate-icon.png'></image>
+          <image wx:else class='certificate_icon' src='../../img/certificate2-icon.png'></image>
           <text class='star'>{{item.eval_score}}星级</text>
         </view>
         <view class='price'>报价金额
@@ -202,8 +247,8 @@
           <text>{{ser.name}}</text>
         </view>
       </view>
-      <view class='notice_title'>师傅留言</view>
-      <view class='content'>{{item.remarks}}</view>
+      <view class='notice_title' wx:if='{{item.remarks}}'>师傅留言</view>
+      <view class='content' wx:if='{{item.remarks}}'>{{item.remarks}}</view>
     </view>
   </view>
 </view>

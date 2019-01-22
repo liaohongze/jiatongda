@@ -7,7 +7,10 @@
       <text>{{item.prices}}</text>
     </view>
   </view>
-  <view class='time'>{{item.coupon_start_time}}-{{item.coupon_end_time}}</view>
+  <view class='condition_n_time'>
+    <view class='condition'>满￥{{item.coupon_condition}}可用</view>
+    <view class='time'>{{item.coupon_start_time}}-{{item.coupon_end_time}}</view>
+  </view>
 </view>
 <view class='nomore' wx:if="{{canUse.length == 0}}">没有可用的优惠劵</view>
 <!-- <view class='coupon unuseful' wx:for="{{unUseful}}" wx:key="{{index}}" style='background: url(https://www.jiatd.com/uploads/comment/20180903/coupon.png) center center no-repeat;background-size: 100% 100%;'>

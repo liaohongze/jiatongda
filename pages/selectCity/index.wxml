@@ -39,7 +39,7 @@
 </scroll-view>
 
 <view class='search_result' wx:if="{{searchStatus}}">
-  <view class='result_item' wx:for="{{result}}" wx:key="{{index}}" data-city="{{item.city}}" bindtap="bindCity">
+  <view class='result_item' wx:for="{{result}}" wx:key="{{index}}" data-city="{{item.city}}" data-adcode='{{item.cityid}}' bindtap="bindCity">
     {{item.city}}
   </view>
 </view>

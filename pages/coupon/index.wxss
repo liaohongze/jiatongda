@@ -60,10 +60,12 @@
   font-size: 30rpx;
 }
 
-.coupon .time {
+.coupon .condition_n_time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 48rpx;
-  padding-left: 42rpx;
-  line-height: 48rpx;
+  padding: 0 42rpx;
   font-size: 20rpx;
   color: #666;
 }

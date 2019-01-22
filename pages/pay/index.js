@@ -24,6 +24,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     this.setData({
       payCount: parseFloat(options.count).toFixed(2),
       offerPrice: parseFloat(options.count),
@@ -192,11 +193,14 @@ Page({
       status: 0 //0为未使用
     });
     getCoupon.then(res => {
+      console.log(res)
       var coupons = res.data.data.list, length = res.data.data.list.length
       var canUse = [], maxSaleOff = 0, finalCoupon = {code: '', prices: 0}
 
+      console.log(coupons)
+
       for (let item of coupons) {
-        if (item.service_id.split(',').indexOf(that.data.cId + '') != -1) {
+        if (item.service_id.split(',').indexOf(that.data.cId + '') != -1 || item.is_use_product === 1) {
           if (item.prices <= that.data.payCount) {
             canUse.push(item)
           }

@@ -19,7 +19,10 @@
         <text>{{item.prices}}</text>
       </view>
     </view>
-    <view class='time'>{{item.coupon_start_time}}-{{item.coupon_end_time}}</view>
+    <view class='condition_n_time'>
+      <view class='condition'>满￥{{item.coupon_condition}}可用</view>
+      <view class='time'>{{item.coupon_start_time}}-{{item.coupon_end_time}}</view>
+    </view>
   </view>
 </view>
 
@@ -32,7 +35,10 @@
         <text>{{item.prices}}</text>
       </view>
     </view>
-    <view class='time'>{{item.coupon_start_time}}-{{item.coupon_end_time}}</view>
+    <view class='condition_n_time'>
+      <view class='condition'>满￥{{item.coupon_condition}}可用</view>
+      <view class='time'>{{item.coupon_start_time}}-{{item.coupon_end_time}}</view>
+    </view>
   </view>
 </view>
 
@@ -45,7 +51,10 @@
         <text>{{item.prices}}</text>
       </view>
     </view>
-    <view class='time'>{{item.coupon_start_time}}-{{item.coupon_end_time}}</view>
+    <view class='condition_n_time'>
+      <view class='condition'>满￥{{item.coupon_condition}}可用</view>
+      <view class='time'>{{item.coupon_start_time}}-{{item.coupon_end_time}}</view>
+    </view>
   </view>
 </view>
 

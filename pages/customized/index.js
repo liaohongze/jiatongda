@@ -148,6 +148,9 @@ Page({
 
   fifthTap: function ({ currentTarget: { dataset: { id, index, idx } }}) {
     let list = this.data.fourthList
+    if (!list[index].child_labels[idx].checked) {
+      list[index].checked = true
+    }
     list[index].child_labels[idx].checked = !list[index].child_labels[idx].checked
 
     this.setData({
@@ -175,16 +178,14 @@ Page({
   getSelectedLabel: function () {
     let splList = []
     this.data.fourthList.map(item => {
-      let hasCheck = false, child_labels = []
+      let child_labels = []
       item.child_labels.map(label => {
         if (label.checked) {
-          hasCheck = true
           child_labels.push(label)
         }
       })
-
-      if (hasCheck) {
-        item.child_labels = child_labels
+      item.child_labels = child_labels
+      if (item.checked || item.child_labels.length) {
         splList.push(item)
       }
     })
@@ -210,6 +211,15 @@ Page({
         })
         that.cartNum()
       }
+    })
+  },
+
+  fourthCheck: function ({currentTarget: {dataset: {index}}}) {
+    let fourthList = this.data.fourthList
+    fourthList[index].checked = !fourthList[index].checked
+
+    this.setData({
+      fourthList
     })
   },
 

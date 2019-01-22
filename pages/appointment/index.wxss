@@ -101,6 +101,7 @@ textarea {
 
 .fourth_list {
   padding-right: 30rpx;
+  padding-bottom: 20rpx;
   margin-bottom: 21rpx;
   margin-left: 40rpx;
   border-bottom: 1rpx solid #ddd;
@@ -113,6 +114,14 @@ textarea {
 .fourth_list > text {
   display: block;
   margin-bottom: 15rpx;
+}
+
+.fourth_list .four_title {
+  margin-bottom: 15rpx;
+}
+
+.fourth_list .four_title > text {
+  font-size: 30rpx;
 }
 
 .fourth_list .list text {
@@ -254,6 +263,7 @@ textarea {
 .foot .add_shopcart {
   width: 170rpx;
   height: 100%;
+  padding: 0;
   font-size: 29rpx;
   color: #555;
   line-height: 118rpx;
@@ -263,6 +273,7 @@ textarea {
 .foot .sbumit {
   width: 170rpx;
   height: 100%;
+  padding: 0;
   font-size: 29rpx;
   color: #fff;
   line-height: 118rpx;

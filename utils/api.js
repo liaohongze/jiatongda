@@ -172,6 +172,10 @@ module.exports = {
   cancelOrder: function () {
     return domain + "/mini_user/order/cancel_order"
   },
+  // 将订单状态已上门
+  confirmIndoor: function () {
+    return domain + "/mini_user/order/serviceing"
+  },
   // 订单状态更改为已完成
   sureOrder: function () {
     return domain + "/mini_user/order/sure_order"
@@ -272,6 +276,10 @@ module.exports = {
   deleteShopcarProd: function () {
     return domain + "/mini_user/cart/delete"
   },
+  // 获取购物车优惠券
+  getCarCoupon: function () {
+    return domain + "/mini_user/cart/getCoupon"
+  },
   // 判断有没有绑定父级
   hasBind: function () {
     return domain + "/mini_user/wx_user/hasBind"
@@ -287,5 +295,9 @@ module.exports = {
   // 获取推荐服务产品
   recommenderProd: function () {
     return domain + "/mini_user/service/select_remember_product"
+  },
+  // 重新下单-new
+  reloadOrder: function () {
+    return domain + "/mini_user/cart/reloadOrder"
   }
 }

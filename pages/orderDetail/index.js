@@ -13,7 +13,7 @@ Page({
     visible: false,
     payFeeTitle: '感谢费',
     payFee: '',
-    status: ['新增', '待报价', '已报价', '待确认', '待上门', '服务中', '服务完成', '已完成', '已评价', '已取消'],
+    status: ['新增', '待报价', '已报价', '待确认', '待上门', '服务中', '服务完成', '已完成', '已评价', '已取消', '已上门'],
     actions: [
       {
         name: '不给感谢费',
@@ -236,6 +236,13 @@ Page({
     })
   },
 
+  // 拨打师傅电话
+  callMaster: function ({currentTarget: {dataset: {mobile}}}) {
+    wx.makePhoneCall({
+      phoneNumber: mobile
+    })
+  },
+
   //选择图片
   chooseImage: function (e) {
     var that = this;
@@ -363,7 +370,7 @@ Page({
   // 取消订单
   cancelOrder: function () {
     var that = this
-    var content = this.data.order.status === '5' ? '确认取消订单？\r\n由于师傅已上门，如需继续取消订单，系统将从已支付费用中扣除30元的上门费，剩余金额原路返回!' : '确定取消订单？'
+    var content = this.data.order.status === 5 ? '确认取消订单？\r\n由于师傅已上门，如需继续取消订单，系统将从已支付费用中扣除30元的上门费，剩余金额原路返回!' : '确定取消订单？'
     wx.showModal({
       title: '提示',
       content: content,
@@ -408,6 +415,38 @@ Page({
           })
         } else if (res.cancel) {
           // console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  confirmIndoor: function () {
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '确认上门后，您如需取消订单，需支付30元上门费作为师傅补偿！',
+      success: function (modalRes) {
+        if (modalRes.confirm) {
+          var confirmIndoor = wxRequest.postRequest(path.confirmIndoor(), {
+            order_id: that.data.order.order_id
+          });
+
+          confirmIndoor.then(res => {
+            if (res.data.status) {
+              that.getOrderById(that.data.order.order_id)
+              wx.showToast({
+                title: '确认上门成功',
+                icon: 'success',
+                duration: 2000
+              })
+            } else {
+              wx.showToast({
+                title: res.data.message,
+                icon: 'none',
+                duration: 2000
+              })
+            }
+          })
         }
       }
     })
@@ -474,5 +513,38 @@ Page({
       if (!res.data.status) return
       that.agreeAndPay(dataset.price)
     })
+  },
+
+  // 重新下单
+  retakeOrder: function () {
+    let that = this
+    var reloadOrder = wxRequest.postRequest(path.reloadOrder(), {
+      order_id: this.data.order.order_id
+    })
+    reloadOrder.then(res => {
+      if (res.data.status) {
+        wx.showModal({
+          title: '重新下单成功!',
+          content: '点击确认到购物车查看',
+          success(modalres) {
+            if (modalres.confirm) {
+              wx.redirectTo({
+                url: '/pages/shopCart/index?tab=' + (that.data.order.is_standard ? 1 : 2),
+              })
+            }
+          }
+        })
+      } else {
+        wx.showToast({
+          title: res.data.message,
+          icon: "none",
+          duration: 2000
+        })
+      }
+    })
+    // wx.showToast({
+    //   title: '该功能开发中...',
+    //   icon: 'none'
+    // })
   }
 })

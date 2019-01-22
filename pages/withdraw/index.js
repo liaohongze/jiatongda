@@ -85,7 +85,7 @@ Page({
   inputChange: function (e) {
     this.setData({
       cash: parseFloat(e.detail.value),
-      seriveCharge: (parseFloat(e.detail.value) * this.data.rate).toFixed(2)
+      seriveCharge: parseFloat((parseFloat(e.detail.value) * this.data.rate).toFixed(2)) || 0
     })
   },
 
@@ -110,7 +110,7 @@ Page({
       if (res.data.status) {
         that.setData({
           countPlaceHolder: parseInt(res.data.data.all_cash_limit.value),
-          rate: parseFloat(res.data.data.cash.value)
+          rate: res.data.data.withdraw
         })
       }
     })

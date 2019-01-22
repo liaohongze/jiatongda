@@ -37,7 +37,16 @@
   color: #7f7f7f;
 }
 
-.info_item text:last-child {
+.info_item .service_type {
+  flex: 1;
+  display: inline-block;
+}
+
+.info_item .service_type > text {
+  display: block;
+}
+
+.info_item > text:last-child {
   flex: 1;
 }
 
@@ -188,8 +197,9 @@
 
 .imgs_box {
   display: flex;
+  flex-wrap: wrap;
   /* justify-content: space-between; */
-  padding: 20rpx 15rpx;
+  padding: 20rpx 0 20rpx 15rpx;
   background-color: #fff;
 }
 
@@ -197,6 +207,7 @@
   width: 155rpx;
   height: 155rpx;
   margin-right: 30rpx;
+  margin-bottom: 25rpx;
 }
 
 .master_list {
@@ -233,10 +244,10 @@
   padding: 0;
   margin: 0;
   font-size: 26rpx;
-  color: #00C482;
+  color: #00c482;
   line-height: 52rpx;
   background-color: #fff;
-  border: 1rpx solid #00C482;
+  border: 1rpx solid #00c482;
   border-radius: 10rpx;
   transform: translateY(-50%);
 }
@@ -267,7 +278,7 @@
   height: 36rpx;
   font-size: 22rpx;
   color: #fff;
-  background-color: #6555C5;
+  background-color: #6555c5;
   border-radius: 10rpx;
 }
 
@@ -275,12 +286,12 @@
   justify-content: flex-start;
   padding: 0;
   font-size: 20rpx;
-  color: #7F7F7F;
+  color: #7f7f7f;
 }
 
 .master_list .info_n_action .price text {
   font-size: 27rpx;
-  color: #FF4949;
+  color: #ff4949;
 }
 
 .master_list .service_n_notice {
@@ -294,7 +305,7 @@
   margin: 10rpx 0 30rpx;
   font-size: 24rpx;
   color: #999;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   border-radius: 10rpx;
   word-break: break-all;
 }
@@ -326,4 +337,117 @@
 
 .progress_no_quoted {
   margin-top: 21rpx;
+}
+
+.hire_master_wrap {
+  background-color: #fff;
+  padding: 42rpx 29rpx;
+  margin-top: 21rpx;
+}
+
+.hire_master {
+  position: relative;
+  display: flex;
+}
+
+.hire_master > image {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+}
+
+.hire_master .master_info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 25rpx;
+  font-size: 25rpx;
+}
+
+.hire_master .master_info .certificate_icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin: 0 14rpx;
+}
+
+.hire_master .master_info .star {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 93rpx;
+  height: 36rpx;
+  font-size: 22rpx;
+  color: #fff;
+  white-space: nowrap;
+  background-color: #6555c5;
+  border-radius: 10rpx;
+}
+
+.hire_master .phonecall {
+  position: absolute;
+  top: 50%;
+  right: 29rpx;
+  font-size: 28rpx;
+  color: #00c482;
+  transform: translateY(-50%);
+}
+
+.hire_master_wrap .service_n_notice {
+  padding-left: 96rpx;
+}
+
+.hire_master_wrap .service_n_notice .content {
+  display: block;
+  width: 559rpx;
+  padding: 21rpx;
+  margin: 10rpx 0 30rpx;
+  font-size: 24rpx;
+  color: #999;
+  background-color: #f5f5f5;
+  border-radius: 10rpx;
+  word-break: break-all;
+}
+
+.hire_master_wrap .service_n_notice .provide_service {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20rpx;
+}
+
+.hire_master_wrap .service_n_notice .provide_service .item {
+  display: flex;
+  align-items: center;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.hire_master_wrap .service_n_notice .provide_service .no_service {
+  border: 1rpx solid #cacaca;
+  border-radius: 4rpx;
+}
+
+.hire_master_wrap .service_n_notice .provide_service .no_service,
+.hire_master_wrap .service_n_notice .provide_service image {
+  width: 37rpx;
+  height: 37rpx;
+  margin-right: 10rpx;
+}
+
+/* 四级、五级 */
+
+.labels_box {
+  display: flex;
+  padding: 20rpx 36rpx;
+  margin-bottom: 21rpx;
+  background-color: #fff;
+  font-size: 26rpx;
+}
+
+.labels_box .title {
+  white-space: nowrap;
+  color: #7f7f7f;
+}
+
+.labels_box .prod_labels {
+  flex: 1;
 }

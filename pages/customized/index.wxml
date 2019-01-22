@@ -22,19 +22,24 @@
 
 <view class='fourth_step' wx:if="{{thirdIndex}}">
   <text class='title'>其他</text>
-  <view class='list fourth_list' wx:for="{{fourthList}}" wx:key="{{index}}">
-    <text>{{item.name}}</text>
-    <view class='list'>
-      <text wx:for="{{item.child_labels}}" wx:for-index='idx' wx:for-item='label' wx:key="{{idx}}" class='{{label.checked ? "active" : ""}}' data-index='{{index}}' data-idx='{{idx}}' data-id='{{label.spl_id}}' bindtap='fifthTap'>{{label.name}}</text>
+  <checkbox-group>
+    <view class='list fourth_list' wx:for="{{fourthList}}" wx:key="{{index}}">
+        <view class='four_title'>
+          <checkbox checked="{{item.checked}}" bindtap='fourthCheck' data-index='{{index}}' />
+          <text>{{item.name}}</text>
+        </view>
+        <view class='list'>
+          <text wx:for="{{item.child_labels}}" wx:for-index='idx' wx:for-item='label' wx:key="{{idx}}" class='{{label.checked ? "active" : ""}}' data-index='{{index}}' data-idx='{{idx}}' data-id='{{label.spl_id}}' bindtap='fifthTap'>{{label.name}}</text>
+        </view>
     </view>
-  </view>
+  </checkbox-group>
 </view>
 
 <!-- <form report-submit="true" bindsubmit="formSubmit">
   <button form-type='submit' catchtap='gotoSimAppointment' wx:if="{{thirdIndex}}">我要下单</button>
 </form> -->
 
-<view class='tip'>“师傅报价”模式是根据您发布的订单服务内容推送给拥有该类专业技能的师傅，由专业师傅对您的订单进行评估报价，系统将给您推荐服务最好、价格最优的师傅报价。</view>
+<view class='tip'>“师傅报价”模式是根据您发布的订单内容推送给拥有该类专业技能的师傅，由专业师傅对您的订单进行评估报价，您可以根据师傅的报价，备注，选择最适合您的师傅为您服务。</view>
 
 <view class='foot_space'></view>
 

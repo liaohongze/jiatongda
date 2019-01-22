@@ -51,7 +51,6 @@
     </view>
     <text class='time'>服务时间: {{item.make_time}}</text>
     <text class='address'>上门服务地址: {{item.address_info.address}}</text>
-    <text class='address'>订单号: {{item.order_sn}}</text>
   </navigator>
 </view>
 

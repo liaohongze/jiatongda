@@ -48,7 +48,10 @@
 
 <navigator url="/pages/genCode/index" class='menu_item'>
   <text>{{generalization.status === 1 ? '我的' : '申请'}}推广码</text>
-  <i-icon type="enter" size="18" color="#cccccc" />
+  <view class='right_size'>
+    <text>{{reCode}}</text>
+    <i-icon type="enter" size="18" color="#cccccc" />
+  </view>
 </navigator>
 
 <navigator url="/pages/genStream/index" class='menu_item' wx:if="{{generalization.status === 1}}">

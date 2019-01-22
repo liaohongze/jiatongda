@@ -80,25 +80,13 @@ Page({
     hasbind.then(res => {
       if (res.data.data.has) {
         that.setData({
-          hasbind: true
+          hasbind: true,
+          reCode: res.data.data.code
         })
-        that.getReCode()
       } else {
         that.setData({
           hasbind: false,
           disableBtn: false
-        })
-      }
-    })
-  },
-
-  getReCode: function () {
-    var that = this
-    var getRememberNo = wxRequest.postRequest(path.getRememberNo())
-    getRememberNo.then(res => {
-      if (res.data.status) {
-        that.setData({
-          reCode: res.data.data.code
         })
       }
     })
@@ -109,7 +97,9 @@ Page({
     this.setData({
       disableBtn: true
     }, () => {
-      var bindParent = wxRequest.postRequest(path.bindParent())
+      var bindParent = wxRequest.postRequest(path.bindParent(), {
+        code: this.data.reCode
+      })
       bindParent.then(res => {
         if (res.data.status) {
           wx.showToast({
@@ -122,6 +112,9 @@ Page({
             title: res.data.message,
             icon: 'none',
             duration: 2000
+          })
+          that.setData({
+            disableBtn: false
           })
         }
       })
@@ -136,5 +129,5 @@ Page({
     getFormId.then(res => {
       // console.log(res)
     })
-  },
+  }
 })

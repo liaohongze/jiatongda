@@ -93,14 +93,17 @@
 </view> -->
 
 <i-panel title="其他" wx:if='{{product.labels.length}}'>
-  <view class='fourth_box'>
+  <checkbox-group>
     <view class='fourth_list' wx:for="{{product.labels}}" wx:key="{{index}}">
-      <text>{{item.name}}</text>
+      <view class='four_title'>
+        <checkbox checked="{{item.checked}}" bindtap='fourthCheck' data-index='{{index}}' />
+        <text>{{item.name}}</text>
+      </view>
       <view class='list'>
         <text wx:for="{{item.child_labels}}" wx:for-index='idx' wx:for-item='label' wx:key="{{idx}}" class='{{label.checked ? "active" : ""}}' data-index='{{index}}' data-idx='{{idx}}' data-id='{{label.spl_id}}' bindtap='fifthTap'>{{label.name}}</text>
       </view>
     </view>
-  </view>
+  </checkbox-group>
 </i-panel>
 
 <view class='agreement'>

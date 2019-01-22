@@ -22,7 +22,8 @@
 }
 
 .title_status .status {
-  color: #00c482
+  color: #00c482;
+  white-space: nowrap;
 }
 
 .title_status .offered {

@@ -175,7 +175,7 @@ Page({
       if (res.data.status) {
         var totalPage = Math.ceil(res.data.data.count / that.data.pageSize)
         couponList = res.data.data.list
-
+        console.log(couponList);
         for (var i = 0; i < couponList.length; i++) {//格式化时间
           couponList[i].coupon_start_time = util.formatTime(couponList[i].coupon_start_time)
           couponList[i].coupon_end_time = util.formatTime(couponList[i].coupon_end_time)

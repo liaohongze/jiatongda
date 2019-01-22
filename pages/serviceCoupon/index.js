@@ -25,9 +25,10 @@ Page({
       cId: options.c_id,
       total: parseFloat(options.total),
       fromPage: options.from,
-      shopCartIndex: options.index || null
+      shopCartIndex: options.index || null,
+      adcode: options.adcode || null
     }, () => {
-      this.getCoupon()
+      options.from === 'shopCart' ? this.getShopcartCoupon() : this.getCoupon()
     })
   },
 
@@ -98,14 +99,70 @@ Page({
       }
 
       for (let item of coupons) {
-        if (item.service_id.split(',').indexOf(that.data.cId + '') != -1) {
+        if (item.is_use_product === 1) {
           if (item.prices <= that.data.total) {//过滤优惠劵价格大于订单价格的
             canUse.push(item)
           } else {
             unUseful.push(item)
           }
-        } else {
-          unUseful.push(item)
+        }
+
+        if (item.service_id) {
+          if (item.service_id.split(',').indexOf(that.data.cId + '') != -1) {
+            if (item.prices <= that.data.total) {//过滤优惠劵价格大于订单价格的
+              canUse.push(item)
+            } else {
+              unUseful.push(item)
+            }
+          } else {
+            unUseful.push(item)
+          }
+        }
+      }
+
+      that.setData({
+        canUse: canUse,
+        unUseful: unUseful
+      })
+    })
+  },
+
+  getShopcartCoupon: function () {
+    var that = this
+    //查询购物车优惠券
+    var getCarCoupon = wxRequest.postRequest(path.getCarCoupon(), {
+      c_id: this.data.cId,
+      price: this.data.total,
+      adcode: this.data.adcode
+    });
+    getCarCoupon.then(res => {
+      var coupons = res.data.data.list, length = res.data.data.list.length
+      var canUse = [], unUseful = []
+
+      for (let i = 0; i < length; i++) {//格式化时间
+        coupons[i].coupon_start_time = util.formatTime(coupons[i].coupon_start_time)
+        coupons[i].coupon_end_time = util.formatTime(coupons[i].coupon_end_time)
+      }
+
+      for (let item of coupons) {
+        if (item.is_use_product === 1) {
+          if (item.prices <= that.data.total) {//过滤优惠劵价格大于订单价格的
+            canUse.push(item)
+          } else {
+            unUseful.push(item)
+          }
+        }
+
+        if (item.service_id) {
+          if (item.service_id.split(',').indexOf(that.data.cId + '') != -1) {
+            if (item.prices <= that.data.total) {//过滤优惠劵价格大于订单价格的
+              canUse.push(item)
+            } else {
+              unUseful.push(item)
+            }
+          } else {
+            unUseful.push(item)
+          }
         }
       }
 

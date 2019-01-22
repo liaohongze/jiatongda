@@ -40,6 +40,8 @@
 
 .coupon .info_n_action .title_n_price {
   position: relative;
+  display: flex;
+  align-items: center;
   width: 523rpx;
 }
 
@@ -55,17 +57,9 @@
   transform: translateY(-50%);
 }
 
-.coupon .info_n_action .title {
-  width: 523rpx;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 31rpx;
-  font-weight: 600;
-}
-
 .coupon .title_n_price .price {
   display: flex;
+  width: 160rpx;
   justify-content: flex-start;
   font-size: 35rpx;
   color: #ff3a48;
@@ -73,6 +67,16 @@
 
 .coupon .title_n_price .price .symbol {
   font-size: 30rpx;
+}
+
+.coupon .info_n_action .title {
+  flex: 1;
+  padding: 0 14rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 31rpx;
+  font-weight: 600;
 }
 
 .coupon .info_n_action .action {

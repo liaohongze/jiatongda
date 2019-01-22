@@ -55,7 +55,7 @@
 
 <view class='get_coupon' wx:if="{{showGetCoupon}}">
   <view class='content'>
-    <image class='close' src='/img/delete.png' bintap='closeGetCoupon'></image>
+    <image class='close' src='/img/delete.png' bindtap='closeGetCoupon'></image>
     <image class='redbag' src='/img/redbag.png'></image>
     <text><text class='money_symbol'>￥</text>{{couponPrice}}</text>
     <button bindtap='getCoupon'>马上领取</button>

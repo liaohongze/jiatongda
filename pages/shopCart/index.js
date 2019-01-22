@@ -21,7 +21,7 @@ Page({
     finalTotal: 0,
     startDate: '', //用于时间选择器的开始时间
     endDate: '', //用于时间选择器的结束时间
-    index: [0, 0],
+    timeIndex: [0, 0],
     time: [['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'], ['00', '30']],
     couponMsg: '未使用优惠券',
     list1: [],
@@ -45,9 +45,18 @@ Page({
     var year = myDate.getFullYear();
     var month = myDate.getMonth() + 1;
     var day = myDate.getDate();
+    var hour = myDate.getHours();
+    var minutes = myDate.getMinutes();
 
     if (month < 10) {
       month = '0' + month
+    }
+
+    if (minutes > 30) {
+      var count = hour + 1
+      if (count === 24) {
+        day = day + 1
+      }
     }
 
     if (day < 10) {
@@ -74,13 +83,15 @@ Page({
     let list = this.data['list' + this.data.current]
     if (app.globalData.pageShopCart.coupon.index) {
       list[app.globalData.pageShopCart.coupon.index].coupon_info = app.globalData.pageShopCart.coupon
+      this.getFinalTotal()
     }
 
     if (app.globalData.pageShopCart.address.idx) {
       if (app.globalData.pageShopCart.address.addrtype === 'start') {
-        list[app.globalData.pageShopCart.address.index].take_address_info = app.globalData.pageShopCart.address.addr
+        console.log('start')
+        list[app.globalData.pageShopCart.address.idx].take_address_info = app.globalData.pageShopCart.address.addr
       } else if (app.globalData.pageShopCart.address.addrtype === 'end') {
-        list[app.globalData.pageShopCart.address.index].address_info = app.globalData.pageShopCart.address.addr
+        list[app.globalData.pageShopCart.address.idx].address_info = app.globalData.pageShopCart.address.addr
       }
     }
 
@@ -152,6 +163,10 @@ Page({
         ['currentPage' + tab]: this.data['currentPage' + tab] + 1,
         isLoading: false,
         showNoMore: (this.data['currentPage' + tab] + 1) > Math.ceil(list.data.data.count / 10) ? true : false
+      }, () => {
+        if (this.data['list' + tab].length) {
+          tab === '1' ? this.checkAll() : this.checkAll2()
+        }
       })
     }
   },
@@ -277,6 +292,9 @@ Page({
       })
     }
 
+    // 删除优惠券
+    list1[index].coupon_info = null
+
     this.setData({
       list1
     }, () => {
@@ -322,6 +340,9 @@ Page({
       })
     }
 
+    // 删除优惠券
+    list1[index].coupon_info = null
+
     this.setData({
       list1,
       allChecked
@@ -359,6 +380,9 @@ Page({
       list1[index].product_list[prodindex].sku_list[skuindex].checked = true
     }
 
+    // 删除优惠券
+    list1[index].coupon_info = null
+
     this.setData({
       list1,
       allChecked
@@ -372,6 +396,8 @@ Page({
     if (this.data.allChecked) {
       list1.map(cate => {
         cate.checked = false
+        // 删除优惠券
+        cate.coupon_info = null
         cate.product_list.map(prod => {
           prod.checked = false
           prod.sku_list.map(sku => {
@@ -382,6 +408,8 @@ Page({
     } else {
       list1.map(cate => {
         cate.checked = true
+        // 删除优惠券
+        cate.coupon_info = null
         cate.product_list.map(prod => {
           prod.checked = true
           prod.sku_list.map(sku => {
@@ -467,13 +495,16 @@ Page({
       }
     })
 
+    let finalMoney = (total - couponTotal).toFixed(2)
+
     this.setData({
-      finalTotal: (total - couponTotal).toFixed(2)
+      finalTotal: finalMoney > 0 ? finalMoney : 0
     })
 
-    return (total - couponTotal).toFixed(2)
+    return finalMoney > 0 ? finalMoney : 0
   },
 
+  // 下单
   takeOrder: async function ({ currentTarget: { dataset: { type } } }) {
     let orderJson = type ? this.getNewList1() : this.getNewList2()
     console.log(orderJson)
@@ -537,6 +568,15 @@ Page({
     wx.navigateTo({
       url: '/pages/address/index?from=shopCart&idx=' + index + '&addrtype=' + addrtype + '&id=' + ids,
     })
+
+    if (this.data.current === '1') {
+      // 删除优惠券
+      list[index].coupon_info = null
+
+      this.setData({
+        list1: list
+      })
+    }
   },
 
   // 计数器
@@ -556,6 +596,9 @@ Page({
       }
     }
 
+    // 删除优惠券
+    list[index].coupon_info = null
+
     this.setData({
       ['list' + this.data.current]: list
     }, () => {
@@ -571,6 +614,9 @@ Page({
       list[index].product_list[prodindex].num += 1
     }
 
+    // 删除优惠券
+    list[index].coupon_info = null
+
     this.setData({
       ['list' + this.data.current]: list
     }, () => {
@@ -585,6 +631,9 @@ Page({
     } else {
       list[index].product_list[prodindex].num = value
     }
+
+    // 删除优惠券
+    list[index].coupon_info = null
 
     this.setData({
       ['list' + this.data.current]: list
@@ -688,7 +737,7 @@ Page({
       coupon_id: '',
       prices: 0
     }
-    var url = '../serviceCoupon/index?c_id=' + cid + '&total=' + this.getCategoryTotal(index) + '&index=' + index + '&from=shopCart'
+    var url = '../serviceCoupon/index?c_id=' + cid + '&total=' + this.getCategoryTotal(index) + '&index=' + index + '&from=shopCart&adcode=' + (app.globalData.address.selectAdcode == '' ? app.globalData.address.adcode : app.globalData.address.selectAdcode)
     wx.navigateTo({
       url: url,
     })
@@ -729,7 +778,7 @@ Page({
     if (hasCateCheck) {
       let verify = true
       newList.map(item => {
-        if (!item.address_info.username) {
+        if (!item.address_info.name) {
           wx.showToast({
             title: '服务地址不能为空！',
             icon: 'none',
@@ -757,7 +806,7 @@ Page({
           return false
         }
         item.is_standard = 1
-        item.username = item.address_info.username
+        item.username = item.address_info.name
         item.mobile = item.address_info.mobile
       })
 
@@ -794,7 +843,7 @@ Page({
     if (hasCateCheck) {
       let verify = true
       newList.map(item => {
-        if (!item.address_info.username) {
+        if (!item.address_info.name) {
           wx.showToast({
             title: '服务地址不能为空！',
             icon: 'none',
@@ -823,7 +872,7 @@ Page({
         }
 
         item.is_standard = 0
-        item.username = item.address_info.username
+        item.username = item.address_info.name
         item.mobile = item.address_info.mobile
       })
       return verify ? newList : false
@@ -835,8 +884,11 @@ Page({
   // 删除产品
   deleteProd: async function (e) {
     let dataset = e.currentTarget.dataset
+    var makeTime = this.data['list' + this.data.current][dataset.index].make_time
     let post_data = {
-      product_id: dataset.pid
+      product_id: dataset.pid,
+      address_id: this.data['list' + this.data.current][dataset.index].address_info.id,
+      make_time: makeTime[0] + ' ' + makeTime[1]
     }
 
     if (dataset.skuid) {

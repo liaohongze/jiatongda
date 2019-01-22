@@ -220,8 +220,8 @@ Page({
   addComment: function () {
     var fileNames = this.data.fileNames
     var addComment = wxRequest.postRequest(path.addComment(), {
-      to_uid: this.data.order.master_id,
-      to_username: this.data.order.master_name,
+      to_uid: this.data.order.master_info.master_id,
+      to_username: this.data.order.master_info.username,
       obj_id: this.data.order.order_id,
       star: '{"skill":' + this.data.starIndex1 + ',"attitude":' + this.data.starIndex2 + ',"efficiency":' + this.data.starIndex3 + '}',
       content: this.data.msg,

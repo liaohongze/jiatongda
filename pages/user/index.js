@@ -16,7 +16,8 @@ Page({
     couponNum: 0,
     collecitionNum: 0,
     serviceTel: '',
-    generalization: null
+    generalization: null,
+    reCode: ''
   },
 
   /**
@@ -58,6 +59,7 @@ Page({
     })
 
     that.getCoupon()
+    that.getReCode()
   },
 
   /**
@@ -126,6 +128,18 @@ Page({
     wx.previewImage({
       urls: [this.data.generalization.qrcode],
       current: this.data.generalization.qrcode
+    })
+  },
+
+  getReCode: function () {
+    var that = this
+    var getRememberNo = wxRequest.postRequest(path.getRememberNo())
+    getRememberNo.then(res => {
+      if (res.data.status) {
+        that.setData({
+          reCode: res.data.data.code
+        })
+      }
     })
   }
 })

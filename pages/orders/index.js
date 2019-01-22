@@ -24,7 +24,7 @@ Page({
     totalPage5: 1,
     pageSize: 10,
     showNoMore: false,
-    status: ['新增', '待报价', '已报价', '待确认', '待上门', '服务中', '服务完成', '已完成', '已评价', '已取消'],
+    status: ['新增', '待报价', '已报价', '待确认', '待上门', '服务中', '服务完成', '已完成', '已评价', '已取消', '已上门'],
     task: [],
     excuting: [],
     completed: [],
@@ -75,7 +75,7 @@ Page({
         if (app.globalData.orderType == 'excuting') {
           tab = 'tab2'
           page = this.data.currentPage2
-          status = '-1,3,4,5,6'
+          status = '-1,3,4,5,6,-5'
           isStandard = null
         } else if (app.globalData.orderType == 'completed') {
           tab = 'tab3'
@@ -157,7 +157,7 @@ Page({
           status = '-1,1,2'
           isStandard = -1
         } else if (that.data.current == 'tab2') {
-          status = '-1,3,4,5,6'
+          status = '-1,3,4,5,6,-5'
           isStandard = null
           page = this.data.currentPage2
         } else if (that.data.current == 'tab3') {
@@ -194,7 +194,7 @@ Page({
         page = this.data.currentPage1
         totalPage = this.data.totalPage1
       } else if (this.data.current == 'tab2') {
-        status = '-1,3,4,5,6'
+        status = '-1,3,4,5,6,-5'
         isStandard = null
         page = this.data.currentPage2
         totalPage = this.data.totalPage2
@@ -237,7 +237,7 @@ Page({
         isStandard = -1
         page = this.data.currentPage1
       } else if (detail.key == 'tab2') {//标准产品的订单（新增，待确认，待上门，服务中，服务完成）
-        status = '-1,3,4,5,6'
+        status = '-1,3,4,5,6,-5'
         isStandard = null
         page = this.data.currentPage2
       } else if (detail.key == 'tab3') {//历史已完成订单（已完成，已评价）
@@ -285,7 +285,7 @@ Page({
             totalPage1: totalPage,
             currentPage1: page + 1
           })
-        } else if (status == '-1,3,4,5,6') {
+        } else if (status == '-1,3,4,5,6,-5') {
           that.setData({
             excuting: [...that.data.excuting, ...orderList],
             totalPage2: totalPage,

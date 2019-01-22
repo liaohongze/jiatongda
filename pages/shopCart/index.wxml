@@ -16,6 +16,7 @@
           <view class='prod_name'>
             <checkbox value='{{index + "," + prodIndex}}' checked="{{prod.checked}}" data-index='{{index}}' data-prodindex='{{prodIndex}}' bindtap='prodTap' />
             <text>{{prod.p_name}}</text>
+            <navigator url='/pages/appointment/index?id={{item.product_list[0].p_id}}'>详情</navigator>
           </view>
           <checkbox-group bindchange="skuChange">
             <view class='sku' wx:for='{{prod.sku_list}}' wx:for-index='skuIndex' wx:for-item='sku' wx:key='{{skuIndex}}'>
@@ -51,8 +52,8 @@
       <view class='addr' bindtap='selectAddr' data-index='{{index}}' data-cid='{{item.c_id}}' data-addrtype='end'>
         <image src='../../img/icon-end.png' mode='aspectFit' />
         <view class='info'>
-          <text>{{item.address_info.username}} {{item.address_info.mobile}}</text>
-          <view>{{item.address_info.address_str}}</view>
+          <text>{{item.address_info.name || ''}} {{item.address_info.mobile || ''}}</text>
+          <view>{{item.address_info.address || ''}}</view>
         </view>
         <view class='icon'>
           <i-icon type="enter" size="24" color="#cccccc" />
@@ -66,26 +67,26 @@
             <text>上门服务日期</text>
           </view>
           <view class='date_right'>
-            <text>{{item.date}}</text>
+            <text>{{item.date || ''}}</text>
             <i-icon type="enter" size="24" color="#cccccc" />
           </view>
         </view>
       </picker>
 
-      <picker disabled='{{item.date === ""}}' mode="multiSelector" value="{{index}}" range="{{time}}" bindchange="bindTimeChange" bindcolumnchange="timeColumnChange" data-index='{{index}}'>
+      <picker disabled='{{item.date === ""}}' mode="multiSelector" value="{{timeIndex}}" range="{{time}}" bindchange="bindTimeChange" bindcolumnchange="timeColumnChange" data-index='{{index}}'>
         <view class='time' bindtap='clickTimePicker' data-index='{{index}}'>
           <view class='left_side'>
             <i-icon type="clock" size="26" color="#09bb07" />
             <text>上门服务时间</text>
           </view>
           <view class='date_right'>
-            <text>{{item.time}}</text>
+            <text>{{item.time || ''}}</text>
             <i-icon type="enter" size="24" color="#cccccc" />
           </view>
         </view>
       </picker>
 
-      <view class='coupon' catchtap='selectCoupon' catchtap='selectCoupon' data-index='{{index}}' data-cid='{{item.c_id}}'>
+      <view class='coupon' catchtap='selectCoupon' data-index='{{index}}' data-cid='{{item.c_id}}'>
         <view class='left_side'>
           <i-icon type="coupons" size="26" color="#09bb07" />
           <text>优惠券</text>
@@ -112,6 +113,7 @@
           <view class='prod_name'>
             <checkbox value='{{index + "," + prodIndex}}' checked="{{prod.checked}}" data-index='{{index}}' data-prodindex='{{prodIndex}}' bindtap='prodTap2' />
             <text>{{prod.p_name}}</text>
+            <navigator url='/pages/appointment/index?id={{item.product_list[0].p_id}}'>详情</navigator>
             <text class='delete' data-pid='{{prod.p_id}}' data-index='{{index}}' data-prodindex='{{prodIndex}}' catchtap='deleteProd'>删除</text>
           </view>
           <view class='expect_n_number'>
@@ -142,8 +144,8 @@
       <view class='addr' bindtap='selectAddr' data-index='{{index}}' data-cid='{{item.c_id}}' data-addrtype='end'>
         <image src='../../img/icon-end.png' mode='aspectFit' />
         <view class='info'>
-          <text>{{item.address_info.username || ''}} {{item.address_info.mobile || ''}}</text>
-          <view>{{item.address_info.address_str || ''}}</view>
+          <text>{{item.address_info.name || ''}} {{item.address_info.mobile || ''}}</text>
+          <view>{{item.address_info.address || ''}}</view>
         </view>
         <view class='icon'>
           <i-icon type="enter" size="24" color="#cccccc" />
@@ -163,7 +165,7 @@
         </view>
       </picker>
 
-      <picker disabled='{{item.date==="" }} ' mode="multiSelector" value="{{index}}" range="{{time}}" bindchange="bindTimeChange" bindcolumnchange="timeColumnChange" data-index='{{index}} '>
+      <picker disabled='{{item.date===""}}' mode="multiSelector" value="{{timeIndex}}" range="{{time}}" bindchange="bindTimeChange" bindcolumnchange="timeColumnChange" data-index='{{index}}'>
         <view class='time' bindtap='clickTimePicker' data-index='{{index}}'>
           <view class='left_side'>
             <i-icon type="clock" size="26" color="#09bb07" />

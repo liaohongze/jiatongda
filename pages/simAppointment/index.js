@@ -41,9 +41,18 @@ Page({
     var year = myDate.getFullYear();
     var month = myDate.getMonth() + 1;
     var day = myDate.getDate();
+    var hour = myDate.getHours();
+    var minutes = myDate.getMinutes();
 
     if (month < 10) {
       month = '0' + month
+    }
+
+    if (minutes > 30) {
+      var count = hour + 1
+      if (count === 24) {
+        day = day + 1
+      }
     }
 
     if (day < 10) {
@@ -68,8 +77,7 @@ Page({
    */
   onShow: function() {
     this.setData({
-      order: app.globalData.pageSimAppoint,
-      order: app.globalData.pageSimAppoint,
+      order: app.globalData.pageSimAppoint
     })
     this.cartNum()
   },
@@ -111,7 +119,7 @@ Page({
 
   expectedChange: function (e) {
     this.setData({
-      expected: parseFloat(e.detail.value)
+      expected: e.detail.value
     })
   },
 
@@ -367,7 +375,7 @@ Page({
       p_id: this.data.product.p_id,
       remark: this.data.order.msg,
       address_id: this.data.order.address.id,
-      expected_quotation: this.data.expected,
+      expected_quotation: parseFloat(this.data.expected),
       is_standard: 0,
       date: this.data.order.date,
       time: this.data.order.time,
@@ -436,8 +444,20 @@ Page({
     })
   },
 
+  fourthCheck: function ({ currentTarget: { dataset: { index } } }) {
+    let product = this.data.product
+    product.labels[index].checked = !product.labels[index].checked
+
+    this.setData({
+      product
+    })
+  },
+
   fifthTap: function ({ currentTarget: { dataset: { index, idx } } }) {
     let product = this.data.product
+    if (!product.labels[index].child_labels[idx].checked) {
+      product.labels[index].checked = true
+    }
     product.labels[index].child_labels[idx].checked = !product.labels[index].child_labels[idx].checked
 
     this.setData({
@@ -448,16 +468,14 @@ Page({
   getSelectedLabel: function () {
     let splList = []
     this.data.product.labels.map(item => {
-      let hasCheck = false, child_labels = []
+      let child_labels = []
       item.child_labels.map(label => {
         if (label.checked) {
-          hasCheck = true
           child_labels.push(label)
         }
       })
-
-      if (hasCheck) {
-        item.child_labels = child_labels
+      item.child_labels = child_labels
+      if (item.checked || item.child_labels.length) {
         splList.push(item)
       }
     })

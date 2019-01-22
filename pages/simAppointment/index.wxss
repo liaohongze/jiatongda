@@ -96,6 +96,7 @@ textarea {
 
 .fourth_list {
   padding-right: 30rpx;
+  padding-bottom: 20rpx;
   margin-bottom: 21rpx;
   margin-left: 40rpx;
   border-bottom: 1rpx solid #ddd;
@@ -103,6 +104,10 @@ textarea {
 
 .fourth_list:last-of-type {
   border-color: transparent;
+}
+
+.fourth_list .four_title {
+  margin-bottom: 15rpx;
 }
 
 .fourth_list > text {
@@ -213,6 +218,7 @@ textarea {
 .add_shopcart, .submit {
   width: 200rpx;
   height: 118rpx;
+  padding: 0;
   font-size: 29rpx;
   line-height: 118rpx;
   border-radius: 0;

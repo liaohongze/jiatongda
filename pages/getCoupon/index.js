@@ -39,24 +39,29 @@ Page({
    */
   onShow: function() {
     if (wx.getStorageSync('token')) {
-      if (this.data.city !== app.globalData.address.selectCity) {
+      if (this.data.city === '') {
         this.setData({
-          isLoading: true,
-          currentPage: 1,
-          totalPage: 1,
-          showNoMore: false,
-          couponList: []
+          city: app.globalData.address.selectCity == '' ? app.globalData.address.city : app.globalData.address.selectCity,
+          adcode: app.globalData.address.selectAdcode == '' ? app.globalData.address.adcode : app.globalData.address.selectAdcode
         }, () => {
           this.getCouponList()
+          this.couponNewInfo()
         })
+      } else {
+        if (this.data.city !== app.globalData.address.selectCity) {
+          this.setData({
+            city: app.globalData.address.selectCity == '' ? app.globalData.address.city : app.globalData.address.selectCity,
+            adcode: app.globalData.address.selectAdcode == '' ? app.globalData.address.adcode : app.globalData.address.selectAdcode,
+            isLoading: true,
+            currentPage: 1,
+            totalPage: 1,
+            showNoMore: false,
+            couponList: []
+          }, () => {
+            this.getCouponList()
+          })
+        }
       }
-      this.setData({
-        city: app.globalData.address.selectCity == '' ? app.globalData.address.city : app.globalData.address.selectCity,
-        adcode: app.globalData.address.selectAdcode == '' ? app.globalData.address.adcode : app.globalData.address.selectAdcode
-      }, () => {
-        this.getCouponList()
-        this.couponNewInfo()
-      })
     }
   },
 
@@ -85,7 +90,9 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    if (this.data.isLoading) return
+    if (this.data.currentPage > this.data.totalPage) return
+    this.getCouponList()
   },
 
   /**
@@ -128,6 +135,12 @@ Page({
           totalPage: Math.ceil(res.data.data.count / 10),
           isLoading: false,
           showNoMore: that.data.currentPage + 1 > Math.ceil(res.data.data.count / 10) ? true : false
+        })
+      } else {
+        wx.showToast({
+          title: res.data.message,
+          icon: 'none',
+          duration: 2000
         })
       }
     })
@@ -177,8 +190,8 @@ Page({
         wx.showModal({
           title: '提示',
           content: res.data.message,
-          success: function (res) {
-            if (res.confirm) {
+          success: function (modalRes) {
+            if (modalRes.confirm) {
               that.recharge(res.data.data.need_pay, id, index)
             }
           }
@@ -233,6 +246,12 @@ Page({
             title: '领取成功',
             duration: 2500
           })
+        })
+      } else {
+        wx.showToast({
+          title: res.data.message,
+          icon: 'none',
+          duration: 2000
         })
       }
     })

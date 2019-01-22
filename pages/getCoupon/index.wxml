@@ -14,11 +14,13 @@
 <view class='coupon' style='background: url(https://www.jiatd.com/uploads/comment/20180903/coupon.png) center center no-repeat;background-size: 100% 100%;' wx:for='{{couponList}}' wx:key='{{index}}'>
   <view class='info_n_action'>
     <view class='title_n_price'>
-      <view class='title'>{{item.coupon_name}}</view>
       <view class='price'>
         <text class='symbol'>￥</text>
+        <!-- <text>3388.88</text> -->
         <text>{{item.prices}}</text>
       </view>
+      <!-- <view class='title'>优惠券名称优惠券名称优惠券名称优惠券名称</view> -->
+      <view class='title'>{{item.coupon_name}}</view>
     </view>
     <view class='action'>
       <text wx:if='{{item.type == 1}}'>免费领取</text>
@@ -30,14 +32,15 @@
     </view>
   </view>
   <view class='filter_n_time'>
-    <text class='filter'>满{{item.coupon_condition}}元可用</text>
+    <text class='filter' wx:if='{{item.coupon_condition == "0.00"}}'>不限</text>
+    <text class='filter' wx:else>满{{item.coupon_condition}}元可用</text>
     <text class='time'>{{item.coupon_start_time}}至{{item.coupon_end_time}}</text>
   </view>
 </view>
 
 <view class='get_coupon' wx:if="{{showGetCoupon}}">
   <view class='content'>
-    <image class='close' src='/img/delete.png' bintap='closeGetCoupon'></image>
+    <image class='close' src='/img/delete.png' bindtap='closeGetCoupon'></image>
     <image class='redbag' src='/img/redbag.png'></image>
     <text><text class='money_symbol'>￥</text>{{couponPrice}}</text>
     <button bindtap='getCoupon'>马上领取</button>

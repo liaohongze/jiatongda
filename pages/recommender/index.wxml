@@ -1,7 +1,7 @@
 <!--pages/recommender/index.wxml-->
 <view class='form'>
   <view class='form_item'>
-    <label>推荐码</label>
+    <label>推荐人</label>
     <text wx:if='{{hasbind}}'>{{reCode}}</text>
     <input type='text' value="{{reCode}}" bindinput='reCodeChange' placeholder='推荐我注册的用户/门店推荐码' wx:else></input>
   </view>

@@ -259,6 +259,7 @@ Page({
 
   selectCurrentCity: function () {
     app.globalData.address.selectCity = ''
+    app.globalData.address.selectAdcode = ''
     wx.navigateBack()
   }
 })
