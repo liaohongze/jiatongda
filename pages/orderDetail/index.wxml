@@ -139,8 +139,8 @@
   </view>
 </view>
 
-<view class='hire_master_wrap'>
-  <view class='hire_master' wx:if='{{order.status >= 3 && order.master_info.master_id && order.status != 9}}'>
+<view class='hire_master_wrap' wx:if='{{order.status >= 3 && order.master_info.master_id && order.status != 9}}'>
+  <view class='hire_master'>
     <image class='master_avatar' src='{{order.master_info.avatar}}' wx:if='{{order.master_info.avatar}}'></image>
     <image class='master_avatar' src='/img/master-avatar.png' wx:else></image>
     <view class='master_info'>

@@ -15,7 +15,8 @@ Page({
     cash: 0,
     countPlaceHolder: '',
     seriveCharge: '0',
-    rate: 0
+    rate: 0,
+    limited: 0
   },
 
   /**
@@ -110,7 +111,8 @@ Page({
       if (res.data.status) {
         that.setData({
           countPlaceHolder: parseInt(res.data.data.all_cash_limit.value),
-          rate: res.data.data.withdraw
+          rate: res.data.data.withdraw,
+          limited: parseFloat(res.data.data.all_cash_limit.value)
         })
       }
     })
@@ -126,9 +128,9 @@ Page({
       return
     }
 
-    if (parseInt(this.data.cash) < 200) {
+    if (parseInt(this.data.cash) < this.data.limited) {
       wx.showToast({
-        title: '提现金额不能小于200',
+        title: '提现金额不能小于' + this.data.limited,
         icon: 'none',
         duration: 2000
       })

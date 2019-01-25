@@ -10,6 +10,7 @@
     data-address='{{item.province}}{{item.city}}{{item.area}}{{item.address}}'
     data-lat='{{item.lat}}'
     data-lng='{{item.lng}}'
+    data-cityid='{{item.city_id}}'
     data-canuse='{{item.can_use}}'
     catchtap='selectAddr'>
     <view class='name_phone'>

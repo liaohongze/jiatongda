@@ -299,5 +299,9 @@ module.exports = {
   // 重新下单-new
   reloadOrder: function () {
     return domain + "/mini_user/cart/reloadOrder"
+  },
+  // 修改购物车的
+  changeCart: function () {
+    return domain + "/mini_user/cart/changeCart"
   }
 }

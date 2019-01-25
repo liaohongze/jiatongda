@@ -203,7 +203,8 @@ Page({
   recharge: function (money, id, index) {
     var that = this
     var userRechargeInit = wxRequest.postRequest(path.userRechargeInit(), {
-      money: money
+      money: money,
+      rechargeType: 1
     });
     userRechargeInit.then(res => {
       if(res.data.status) {

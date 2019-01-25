@@ -120,7 +120,9 @@ Page({
   recharge: function (money) {
     var that = this
     var userRechargeInit = wxRequest.postRequest(path.userRechargeInit(), {
-      money: money
+      money: money,
+      rechargeType: 2,
+      cart_sn: this.data.orderAllSn
     });
     userRechargeInit.then(res => {
       if (res.data.status) {

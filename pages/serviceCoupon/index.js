@@ -14,7 +14,9 @@ Page({
     cId: '',
     total: 0,
     fromPage: 'pay',
-    shopCartIndex: ''
+    shopCartIndex: '',
+    adcode: '',
+    cityid: ''
   },
 
   /**
@@ -26,7 +28,8 @@ Page({
       total: parseFloat(options.total),
       fromPage: options.from,
       shopCartIndex: options.index || null,
-      adcode: options.adcode || null
+      adcode: options.adcode || null,
+      cityid: options.cityid || null
     }, () => {
       options.from === 'shopCart' ? this.getShopcartCoupon() : this.getCoupon()
     })
@@ -87,7 +90,9 @@ Page({
     var getCoupon = wxRequest.postRequest(path.getCoupon(), {
       page: 1,
       page_size: 100,
-      status: 0 //0为未使用
+      status: 0, //0为未使用
+      adcode: this.data.adcode,
+      city_id: this.data.cityid
     });
     getCoupon.then(res => {
       var coupons = res.data.data.list, length = res.data.data.list.length

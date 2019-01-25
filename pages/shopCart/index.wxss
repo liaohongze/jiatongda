@@ -161,6 +161,10 @@
   content: '';
 }
 
+.coupon .coupon_msg {
+  font-size: 24rpx;
+}
+
 /* 联系方式 */
 .addr {
   position: relative;

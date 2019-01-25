@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/agreement/index",
     "pages/shopCart/index",
     "pages/appointment/index",
     "pages/recommender/index",
@@ -20,7 +21,6 @@
     "pages/address/index",
     "pages/orders/index",
     "pages/serviceDetail/index",
-    "pages/agreement/index",
     "pages/serviceCoupon/index",
     "pages/addAddr/index",
     "pages/location/index",

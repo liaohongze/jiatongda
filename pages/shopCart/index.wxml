@@ -16,7 +16,7 @@
           <view class='prod_name'>
             <checkbox value='{{index + "," + prodIndex}}' checked="{{prod.checked}}" data-index='{{index}}' data-prodindex='{{prodIndex}}' bindtap='prodTap' />
             <text>{{prod.p_name}}</text>
-            <navigator url='/pages/appointment/index?id={{item.product_list[0].p_id}}'>详情</navigator>
+            <navigator url='/pages/appointment/index?id={{item.product_list[0].p_id}}'><i-icon type="enter" size="18" color="#cccccc" /></navigator>
           </view>
           <checkbox-group bindchange="skuChange">
             <view class='sku' wx:for='{{prod.sku_list}}' wx:for-index='skuIndex' wx:for-item='sku' wx:key='{{skuIndex}}'>
@@ -60,7 +60,7 @@
         </view>
       </view>
 
-      <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange" data-index='{{index}}'>
+      <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange" data-index='{{index}}' data-cid='{{item.c_id}}'>
         <view class='date'>
           <view class='left_side'>
             <i-icon type="activity" size="26" color="#09bb07" />
@@ -73,7 +73,7 @@
         </view>
       </picker>
 
-      <picker disabled='{{item.date === ""}}' mode="multiSelector" value="{{timeIndex}}" range="{{time}}" bindchange="bindTimeChange" bindcolumnchange="timeColumnChange" data-index='{{index}}'>
+      <picker disabled='{{item.date === ""}}' mode="multiSelector" value="{{timeIndex}}" range="{{time}}" bindchange="bindTimeChange" bindcolumnchange="timeColumnChange" data-index='{{index}}' data-cid='{{item.c_id}}'>
         <view class='time' bindtap='clickTimePicker' data-index='{{index}}'>
           <view class='left_side'>
             <i-icon type="clock" size="26" color="#09bb07" />
@@ -93,7 +93,7 @@
         </view>
         <view class='right_side'>
           <text wx:if="{{item.coupon_info.prices > 0}}">￥{{item.coupon_info.prices}}</text>
-          <text wx:else>{{couponMsg}}</text>
+          <text wx:else class='coupon_msg'>{{couponMsg}}</text>
           <i-icon type="enter" size="24" color="#cccccc" />
         </view>
       </view>
@@ -113,7 +113,7 @@
           <view class='prod_name'>
             <checkbox value='{{index + "," + prodIndex}}' checked="{{prod.checked}}" data-index='{{index}}' data-prodindex='{{prodIndex}}' bindtap='prodTap2' />
             <text>{{prod.p_name}}</text>
-            <navigator url='/pages/appointment/index?id={{item.product_list[0].p_id}}'>详情</navigator>
+            <navigator url='/pages/appointment/index?id={{item.product_list[0].p_id}}'><i-icon type="enter" size="18" color="#cccccc" /></navigator>
             <text class='delete' data-pid='{{prod.p_id}}' data-index='{{index}}' data-prodindex='{{prodIndex}}' catchtap='deleteProd'>删除</text>
           </view>
           <view class='expect_n_number'>
@@ -152,7 +152,7 @@
         </view>
       </view>
 
-      <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange" data-index='{{index}}'>
+      <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange" data-index='{{index}}' data-cid='{{item.c_id}}'>
         <view class='date'>
           <view class='left_side'>
             <i-icon type="activity" size="26" color="#09bb07" />
@@ -165,7 +165,7 @@
         </view>
       </picker>
 
-      <picker disabled='{{item.date===""}}' mode="multiSelector" value="{{timeIndex}}" range="{{time}}" bindchange="bindTimeChange" bindcolumnchange="timeColumnChange" data-index='{{index}}'>
+      <picker disabled='{{item.date===""}}' mode="multiSelector" value="{{timeIndex}}" range="{{time}}" bindchange="bindTimeChange" bindcolumnchange="timeColumnChange" data-index='{{index}}' data-cid='{{item.c_id}}'>
         <view class='time' bindtap='clickTimePicker' data-index='{{index}}'>
           <view class='left_side'>
             <i-icon type="clock" size="26" color="#09bb07" />

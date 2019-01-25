@@ -23,7 +23,7 @@ Page({
     endDate: '', //用于时间选择器的结束时间
     timeIndex: [0, 0],
     time: [['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'], ['00', '30']],
-    couponMsg: '未使用优惠券',
+    couponMsg: '请选择优惠券',
     list1: [],
     list2: []
   },
@@ -87,11 +87,15 @@ Page({
     }
 
     if (app.globalData.pageShopCart.address.idx) {
+      let index = app.globalData.pageShopCart.address.idx
+      console.log(app.globalData.pageShopCart.address.addr)
       if (app.globalData.pageShopCart.address.addrtype === 'start') {
-        console.log('start')
-        list[app.globalData.pageShopCart.address.idx].take_address_info = app.globalData.pageShopCart.address.addr
+        list[index].take_address_info = app.globalData.pageShopCart.address.addr
       } else if (app.globalData.pageShopCart.address.addrtype === 'end') {
-        list[app.globalData.pageShopCart.address.idx].address_info = app.globalData.pageShopCart.address.addr
+        // 更新到数据库
+        this.changeShopcart(list[index].c_id, list[index].address_info.id, list[index].make_time, null, null, null, app.globalData.pageShopCart.address.addr.id, null)
+
+        list[index].address_info = app.globalData.pageShopCart.address.addr
       }
     }
 
@@ -152,7 +156,7 @@ Page({
   getShopcartList: async function (tab) {
     var list = await wxRequest.postRequest(path.getShopCart(), {
       page: this.data['currentPage' + tab],
-      page_size: 10,
+      page_size: 10000,
       is_standard: tab === '1' ? 1 : 0
     });
 
@@ -507,7 +511,7 @@ Page({
   // 下单
   takeOrder: async function ({ currentTarget: { dataset: { type } } }) {
     let orderJson = type ? this.getNewList1() : this.getNewList2()
-    console.log(orderJson)
+    // console.log(orderJson)
     if (orderJson === false) return
     if (!orderJson.length) {
       wx.showToast({
@@ -596,6 +600,10 @@ Page({
       }
     }
 
+    // 更新到数据库，因为需要旧的时间，需要在更改前传入
+    let skuId = this.data.current === '1' ? list[index].product_list[prodindex].sku_list[skuindex].sku_id : null
+    this.changeShopcart(list[index].c_id, list[index].address_info.id, list[index].make_time, skuId, list[index].product_list[prodindex].p_id, (num - 1), null, null)
+
     // 删除优惠券
     list[index].coupon_info = null
 
@@ -613,6 +621,12 @@ Page({
     } else {
       list[index].product_list[prodindex].num += 1
     }
+
+    // 更新到数据库，因为需要旧的时间，需要在更改前传入
+    let skuId = this.data.current === '1' ? list[index].product_list[prodindex].sku_list[skuindex].sku_id : null
+    let modifyNum = this.data.current === '1' ? list[index].product_list[prodindex].sku_list[skuindex].num: list[index].product_list[prodindex].num
+
+    this.changeShopcart(list[index].c_id, list[index].address_info.id, list[index].make_time, skuId, list[index].product_list[prodindex].p_id, modifyNum, null, null)
 
     // 删除优惠券
     list[index].coupon_info = null
@@ -655,6 +669,10 @@ Page({
   //选择日期
   bindDateChange: function ({ currentTarget: { dataset: { index } }, detail: { value } }) {
     let list = this.data['list' + this.data.current]
+    // 更新到数据库，因为需要旧的时间，需要在更改前传入
+    this.changeShopcart(list[index].c_id, list[index].address_info.id, list[index].make_time, null, null, null, null, value + ' ' + list[index].make_time[1])
+
+    list[index].make_time[0] = value
     list[index].date = value
     this.setData({
       ['list' + this.data.current]: list
@@ -664,6 +682,9 @@ Page({
   //选择时间
   bindTimeChange: function ({ currentTarget: { dataset: { index } }, detail: { value } }) {
     let list = this.data['list' + this.data.current]
+    // 更新到数据库，因为需要旧的时间，需要在更改前传入
+    this.changeShopcart(list[index].c_id, list[index].address_info.id, list[index].make_time, null, null, null, null, list[index].date + ' ' + this.data.time[0][value[0]] + ':' + this.data.time[1][value[1]])
+
     list[index].time = this.data.time[0][value[0]] + ':' + this.data.time[1][value[1]]
     this.setData({
       ['list' + this.data.current]: list
@@ -796,6 +817,22 @@ Page({
           verify = false
           return false
         }
+        let date = new Date()
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        month < 10 ? month = '0' + month : null
+        let today = year + '/' + month + '/' + day
+        if (new Date(item.date.replace(/\-/g, '/')) < new Date(today)) {
+          wx.showToast({
+            title: '服务日期不能早于今日！',
+            icon: 'none',
+            duration: 2000
+          })
+          verify = false
+          return false
+        }
         if (item.time == '') {
           wx.showToast({
             title: '服务时间不能为空！',
@@ -804,6 +841,26 @@ Page({
           })
           verify = false
           return false
+        }
+        let timearr = item.time.split(':')
+        if (date.getHours() > parseInt(timearr[0])) {
+          wx.showToast({
+            title: '服务时间不能早于当前时间！',
+            icon: 'none',
+            duration: 2000
+          })
+          verify = false
+          return false
+        } else if (date.getHours() == parseInt(timearr[0])) {
+          if (parseInt(timearr[1]) < date.getMinutes()) {
+            wx.showToast({
+              title: '服务时间不能早于当前时间！',
+              icon: 'none',
+              duration: 2000
+            })
+            verify = false
+            return false
+          }
         }
         item.is_standard = 1
         item.username = item.address_info.name
@@ -861,6 +918,22 @@ Page({
           verify = false
           return false
         }
+        let date = new Date()
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        month < 10 ? month = '0' + month : null
+        let today = year + '/' + month + '/' + day
+        if (new Date(item.date.replace(/\-/g, '/')) < new Date(today)) {
+          wx.showToast({
+            title: '服务日期不能早于今日！',
+            icon: 'none',
+            duration: 2000
+          })
+          verify = false
+          return false
+        }
         if (item.time == '') {
           wx.showToast({
             title: '服务时间不能为空！',
@@ -869,6 +942,26 @@ Page({
           })
           verify = false
           return false
+        }
+        let timearr = item.time.split(':')
+        if (date.getHours() > parseInt(timearr[0])) {
+          wx.showToast({
+            title: '服务时间不能早于当前时间！',
+            icon: 'none',
+            duration: 2000
+          })
+          verify = false
+          return false
+        } else if (date.getHours() == parseInt(timearr[0])) {
+          if (parseInt(timearr[1]) < date.getMinutes()) {
+            wx.showToast({
+              title: '服务时间不能早于当前时间！',
+              icon: 'none',
+              duration: 2000
+            })
+            verify = false
+            return false
+          }
         }
 
         item.is_standard = 0
@@ -916,12 +1009,31 @@ Page({
         endDate: '', //用于时间选择器的结束时间
         index: [0, 0],
         time: [['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'], ['00', '30']],
-        couponMsg: '未使用优惠券',
+        couponMsg: '请选择优惠券',
         list1: [],
         list2: []
       }, () => {
         this.getShopcartList(this.data.current)
       })
     }
+  },
+
+  // 修改购物车
+  changeShopcart: async function (cId, addrId, makeTime, skuId, pId, num, upAddrId, upMakeTime) {
+    let post_data = {
+      c_id: cId,
+      address_id: addrId || '',
+      make_time: (makeTime[0] + ' ' + makeTime[1]) || '',
+      sku_id: skuId,
+      p_id: pId,
+      up_num: num,
+      up_address_id: upAddrId,
+      up_make_time: upMakeTime
+    }
+    wx.showLoading({
+      title: '正在更新',
+    })
+    let changeCart = await wxRequest.postRequest(path.changeCart(), post_data);
+    wx.hideLoading()
   }
 })
