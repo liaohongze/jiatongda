@@ -139,6 +139,15 @@
   white-space: nowrap;
 }
 
+.expect_n_number .expect input {
+  box-sizing: border-box;
+  width: 90rpx;
+  font-size: 22rpx;
+  line-height: 46rpx;
+  text-align: center;
+  border: 1rpx solid #a6a6a6;
+}
+
 .coupon {
   position: relative;
   display: flex;
@@ -216,7 +225,7 @@
 
 .input_number input {
   box-sizing: border-box;
-  width: 79rpx;
+  width: 90rpx;
   font-size: 22rpx;
   line-height: 46rpx;
   text-align: center;

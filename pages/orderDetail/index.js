@@ -478,7 +478,7 @@ Page({
 
   // 非标准订单同意报价并支付
   agreeAndPay: function (price) {
-    var url = '/pages/pay/index?orderId=' + this.data.order.order_id + '&count=' + price + '&orderSn=' + this.data.order.order_sn + '&isStandard=' + this.data.order.is_standard + '&c_id=' + this.data.order.c_id + '&adcode=' + this.data.order.address_info.id + '&cityid=' + this.data.order.endAddr.cityid
+    var url = '/pages/pay/index?orderId=' + this.data.order.order_id + '&count=' + price + '&orderSn=' + this.data.order.order_sn + '&isStandard=' + this.data.order.is_standard + '&c_id=' + this.data.order.c_id + '&cityid=' + this.data.order.endAddr.cityid
     wx.navigateTo({
       url: url,
     })

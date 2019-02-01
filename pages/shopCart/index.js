@@ -84,11 +84,16 @@ Page({
     if (app.globalData.pageShopCart.coupon.index) {
       list[app.globalData.pageShopCart.coupon.index].coupon_info = app.globalData.pageShopCart.coupon
       this.getFinalTotal()
+      app.globalData.pageShopCart.coupon = {
+        index: '',
+        coupon_code: '',
+        coupon_id: '',
+        prices: 0
+      }
     }
 
     if (app.globalData.pageShopCart.address.idx) {
       let index = app.globalData.pageShopCart.address.idx
-      console.log(app.globalData.pageShopCart.address.addr)
       if (app.globalData.pageShopCart.address.addrtype === 'start') {
         list[index].take_address_info = app.globalData.pageShopCart.address.addr
       } else if (app.globalData.pageShopCart.address.addrtype === 'end') {
@@ -97,6 +102,16 @@ Page({
 
         list[index].address_info = app.globalData.pageShopCart.address.addr
       }
+      app.globalData.pageShopCart.address = {
+        idx: '',
+        addrtype: '',
+        addr: {},
+      }
+
+      // 删除优惠券
+      list[index].coupon_info = null
+      // 重新获取总金额
+      this.getFinalTotal()
     }
 
     this.setData({
@@ -558,11 +573,6 @@ Page({
 
   // 选择地址
   selectAddr: function ({ currentTarget: { dataset: { index, cid, addrtype } } }) {
-    app.globalData.pageShopCart.address = {
-      idx: '',
-      addrtype: '',
-      addr: {},
-    }
     let list = this.data['list' + this.data.current]
     let ids = ''
     list[index].product_list.map(item => {
@@ -752,13 +762,7 @@ Page({
 
   // 选择优惠券
   selectCoupon: function ({ currentTarget: { dataset: { index, cid } } }) {
-    app.globalData.pageShopCart.coupon = {
-      index: '',
-      coupon_code: '',
-      coupon_id: '',
-      prices: 0
-    }
-    var url = '../serviceCoupon/index?c_id=' + cid + '&total=' + this.getCategoryTotal(index) + '&index=' + index + '&from=shopCart&adcode=' + (app.globalData.address.selectAdcode == '' ? app.globalData.address.adcode : app.globalData.address.selectAdcode)
+    var url = '../serviceCoupon/index?c_id=' + cid + '&total=' + this.getCategoryTotal(index) + '&index=' + index + '&from=shopCart&cityid=' + this.data.list1[index].address_info.city_id
     wx.navigateTo({
       url: url,
     })

@@ -745,11 +745,11 @@ Page({
     };
 
     //用户下单
-    var submitOrder = wxRequest.postRequest(path.submitOrder(), post_data );
+    var submitOrder = wxRequest.postRequest(path.submitOrder(), post_data);
     submitOrder.then(res => {
       if (res.data.status) {
         wx.redirectTo({
-          url: '/pages/pay/index?orderId=' + res.data.data.order_id + '&orderSn=' + res.data.data.order_sn + '&count=' + (that.data.product.sku.sale_price * that.data.order.count) + '&isStandard=' + that.data.product.is_standard + '&c_id=' + res.data.data.c_id + '&adcode=' + this.data.order.endAddr.id + '&cityid=' + this.data.order.endAddr.cityid
+          url: '/pages/pay/index?orderId=' + res.data.data.order_id + '&orderSn=' + res.data.data.order_sn + '&count=' + (that.data.product.sku.sale_price * that.data.order.count) + '&isStandard=' + that.data.product.is_standard + '&c_id=' + res.data.data.c_id + '&cityid=' + this.data.order.endAddr.city_id
         })
       }
     })

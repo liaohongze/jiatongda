@@ -40,9 +40,9 @@
   "window": {
     "navigationBarBackgroundColor": "#00c482",
     "navigationBarTitleText": "家通达",
-    "navigationBarTextStyle": "light",
+    "navigationBarTextStyle": "black",
     "backgroundColor": "#eeeeee",
-    "backgroundTextStyle": "black"
+    "backgroundTextStyle": "dark"
   },
   "networkTimeout": {
     "uploadFile": 60000

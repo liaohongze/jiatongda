@@ -15,7 +15,6 @@ Page({
     total: 0,
     fromPage: 'pay',
     shopCartIndex: '',
-    adcode: '',
     cityid: ''
   },
 
@@ -28,7 +27,6 @@ Page({
       total: parseFloat(options.total),
       fromPage: options.from,
       shopCartIndex: options.index || null,
-      adcode: options.adcode || null,
       cityid: options.cityid || null
     }, () => {
       options.from === 'shopCart' ? this.getShopcartCoupon() : this.getCoupon()
@@ -89,9 +87,8 @@ Page({
     //查询个人优惠券
     var getCoupon = wxRequest.postRequest(path.getCoupon(), {
       page: 1,
-      page_size: 100,
+      page_size: 1000,
       status: 0, //0为未使用
-      adcode: this.data.adcode,
       city_id: this.data.cityid
     });
     getCoupon.then(res => {
@@ -138,7 +135,7 @@ Page({
     var getCarCoupon = wxRequest.postRequest(path.getCarCoupon(), {
       c_id: this.data.cId,
       price: this.data.total,
-      adcode: this.data.adcode
+      city_id: this.data.cityid
     });
     getCarCoupon.then(res => {
       var coupons = res.data.data.list, length = res.data.data.list.length

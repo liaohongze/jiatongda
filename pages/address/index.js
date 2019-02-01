@@ -172,7 +172,7 @@ Page({
       obj.id = e.currentTarget.id
       obj.lat = data.lat
       obj.lng = data.lng
-      obj.cityid = data.cityid
+      obj.city_id = data.cityid
       app.globalData.pageAddress = obj
 
       if (this.data.fromPage == 'startAddr') {

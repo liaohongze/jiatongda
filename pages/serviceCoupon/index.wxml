@@ -8,7 +8,8 @@
     </view>
   </view>
   <view class='condition_n_time'>
-    <view class='condition'>满￥{{item.coupon_condition}}可用</view>
+    <view class='condition' wx:if='{{item.coupon_condition == "0.00"}}'>不限</view>
+    <view class='condition' wx:else>满￥{{item.coupon_condition}}可用</view>
     <view class='time'>{{item.coupon_start_time}}-{{item.coupon_end_time}}</view>
   </view>
 </view>

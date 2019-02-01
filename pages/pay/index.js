@@ -17,21 +17,22 @@ Page({
     isPaying: false,
     cId: '',
     coupon: { code: '', prices: 0},
-    offerPrice: 0
+    offerPrice: 0,
+    cityid: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
     this.setData({
       payCount: parseFloat(options.count).toFixed(2),
       offerPrice: parseFloat(options.count),
       orderId: options.orderId,
       orderSn: options.orderSn,
       isStandard: parseInt(options.isStandard),
-      cId: options.c_id || ''
+      cId: options.c_id || '',
+      cityid: options.cityid
     })
 
     if (options.c_id) {
@@ -65,6 +66,11 @@ Page({
       this.setData({
         coupon: app.globalData.pagePay.coupon,
         payCount: (this.data.offerPrice - app.globalData.pagePay.coupon.prices).toFixed(2)
+      }, () => {
+        app.globalData.pagePay.coupon = {
+          code: '',
+          prices: 0
+        }
       })
     }
   },
@@ -178,7 +184,7 @@ Page({
   },
 
   gotoCoupon: function () {
-    var url = '../serviceCoupon/index?c_id=' + this.data.cId + '&total=' + this.data.offerPrice + '&from=pay'
+    var url = '../serviceCoupon/index?c_id=' + this.data.cId + '&total=' + this.data.offerPrice + '&from=pay&cityid=' + this.data.cityid
     wx.navigateTo({
       url: url,
     })
@@ -189,15 +195,13 @@ Page({
     //查询个人优惠券
     var getCoupon = wxRequest.postRequest(path.getCoupon(), {
       page: 1,
-      page_size: 100,
-      status: 0 //0为未使用
+      page_size: 1000,
+      status: 0, //0为未使用
+      city_id: this.data.cityid
     });
     getCoupon.then(res => {
-      console.log(res)
       var coupons = res.data.data.list, length = res.data.data.list.length
       var canUse = [], maxSaleOff = 0, finalCoupon = {code: '', prices: 0}
-
-      console.log(coupons)
 
       for (let item of coupons) {
         if (item.service_id.split(',').indexOf(that.data.cId + '') != -1 || item.is_use_product === 1) {
